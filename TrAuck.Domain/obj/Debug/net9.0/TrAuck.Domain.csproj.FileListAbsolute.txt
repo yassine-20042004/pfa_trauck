@@ -1,11 +1,23 @@
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\bin\Debug\net9.0\TrAuck.Domain.deps.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\bin\Debug\net9.0\TrAuck.Domain.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\bin\Debug\net9.0\TrAuck.Domain.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.AssemblyInfoInputs.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.AssemblyInfo.cs
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.csproj.CoreCompileInputs.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\refint\TrAuck.Domain.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\TrAuck.Domain.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Domain\obj\Debug\net9.0\ref\TrAuck.Domain.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.deps.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.AssemblyInfoInputs.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.AssemblyInfo.cs
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.csproj.CoreCompileInputs.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/refint/TrAuck.Domain.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Domain/obj/Debug/net9.0/ref/TrAuck.Domain.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.deps.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/bin/Debug/net9.0/TrAuck.Domain.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.AssemblyInfoInputs.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.AssemblyInfo.cs
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.csproj.CoreCompileInputs.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.sourcelink.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/refint/TrAuck.Domain.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/TrAuck.Domain.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Domain/obj/Debug/net9.0/ref/TrAuck.Domain.dll

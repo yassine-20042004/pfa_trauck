@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrAuck - Fleet Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar glass-panel">
+            <div class="logo">
+                <i class="fa-solid fa-truck-fast"></i>
+                <span>TrAuck</span>
+            </div>
+            <nav>
+                <a href="#" class="nav-item active"><i class="fa-solid fa-id-card"></i> Drivers</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-truck"></i> Vehicles</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-route"></i> Trips</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> Load Plans</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Incidents</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header glass-panel">
+                <h1>Drivers Management</h1>
+                <div class="user-profile">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="Admin">
+                    <span>Admin</span>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Add Driver Form -->
+                <section class="form-section glass-panel">
+                    <h2><i class="fa-solid fa-user-plus"></i> Add New Driver</h2>
+                    <form id="addDriverForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required placeholder="Enter first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required placeholder="Enter last name">
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseNumber">License Number</label>
+                            <input type="text" id="licenseNumber" required placeholder="e.g. AB-123456">
+                        </div>
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span>Add Driver</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- Drivers Table -->
+                <section class="table-section glass-panel">
+                    <div class="table-header">
+                        <h2><i class="fa-solid fa-users"></i> Fleet Drivers</h2>
+                        <button class="btn-icon" onclick="fetchDrivers()"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="driversTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>License Number</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="driversTableBody">
+                                <!-- Dynamic rows go here -->
+                                <tr>
+                                    <td colspan="5" class="text-center loading">Loading drivers...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,38 +1,89 @@
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.csproj.AssemblyReference.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.AssemblyInfoInputs.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.AssemblyInfo.cs
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.csproj.CoreCompileInputs.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\appsettings.Development.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\appsettings.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.staticwebassets.endpoints.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.exe
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.deps.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.runtimeconfig.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Api.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\Microsoft.OpenApi.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Application.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Domain.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Infrastructure.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Application.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Infrastructure.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\bin\Debug\net9.0\TrAuck.Domain.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\rjimswa.dswa.cache.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\scopedcss\bundle\TrAuck.Api.styles.css
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\staticwebassets.build.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\staticwebassets.build.json.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\staticwebassets.development.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.csproj.Up2Date
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\refint\TrAuck.Api.dll
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.pdb
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\TrAuck.Api.genruntimeconfig.cache
-C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Api\obj\Debug\net9.0\ref\TrAuck.Api.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.AssemblyReference.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/rpswa.dswa.cache.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.AssemblyInfoInputs.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.AssemblyInfo.cs
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.CoreCompileInputs.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.MvcApplicationPartsAssemblyInfo.cs
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.MvcApplicationPartsAssemblyInfo.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/appsettings.Development.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/appsettings.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.staticwebassets.endpoints.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.exe
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.deps.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.runtimeconfig.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/Microsoft.OpenApi.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Application.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Domain.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Infrastructure.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Application.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Infrastructure.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/bin/Debug/net9.0/TrAuck.Domain.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/rjimswa.dswa.cache.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/scopedcss/bundle/TrAuck.Api.styles.css
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.json.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/staticwebassets.development.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.Up2Date
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/refint/TrAuck.Api.dll
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.pdb
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.genruntimeconfig.cache
+C:/Users/LENOVO/Desktop/work st/projet_pfa/TrAuck.Api/obj/Debug/net9.0/ref/TrAuck.Api.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/appsettings.Development.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/appsettings.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.staticwebassets.endpoints.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.deps.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.runtimeconfig.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Api.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.AspNetCore.OpenApi.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.OpenApi.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Application.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Domain.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Infrastructure.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Application.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Infrastructure.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/TrAuck.Domain.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.AssemblyReference.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/rpswa.dswa.cache.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.GeneratedMSBuildEditorConfig.editorconfig
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.AssemblyInfoInputs.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.AssemblyInfo.cs
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.CoreCompileInputs.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.MvcApplicationPartsAssemblyInfo.cs
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.MvcApplicationPartsAssemblyInfo.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.sourcelink.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/rjimswa.dswa.cache.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/rjsmrazor.dswa.cache.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/rjsmcshtml.dswa.cache.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/scopedcss/bundle/TrAuck.Api.styles.css
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.json.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/staticwebassets.development.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/staticwebassets.build.endpoints.json
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.csproj.Up2Date
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/refint/TrAuck.Api.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.pdb
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/TrAuck.Api.genruntimeconfig.cache
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/obj/Debug/net9.0/ref/TrAuck.Api.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/MediatR.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/MediatR.Contracts.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.Extensions.Logging.Abstractions.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.IdentityModel.Logging.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/Microsoft.IdentityModel.Tokens.dll
+/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Api/bin/Debug/net9.0/System.Diagnostics.DiagnosticSource.dll
