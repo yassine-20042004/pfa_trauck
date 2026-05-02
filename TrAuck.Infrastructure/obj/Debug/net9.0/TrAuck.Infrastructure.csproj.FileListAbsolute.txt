@@ -1,0 +1,17 @@
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Infrastructure.deps.json
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Infrastructure.dll
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Infrastructure.pdb
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Application.dll
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Domain.dll
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Application.pdb
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\bin\Debug\net9.0\TrAuck.Domain.pdb
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.AssemblyInfo.cs
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.I.5E208259.Up2Date
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.dll
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\refint\TrAuck.Infrastructure.dll
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\TrAuck.Infrastructure.pdb
+C:\Users\LENOVO\Desktop\work st\projet_pfa\TrAuck.Infrastructure\obj\Debug\net9.0\ref\TrAuck.Infrastructure.dll
