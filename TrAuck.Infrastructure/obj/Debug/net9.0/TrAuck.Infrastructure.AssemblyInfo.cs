@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TrAuck.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37ef4df9df0fe5de667ffbb1f358e381a87d4c53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a6212e2b633b7e09fe4889422e85e14e73b08e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("TrAuck.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TrAuck.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

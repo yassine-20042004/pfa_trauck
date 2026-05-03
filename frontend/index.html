@@ -17,18 +17,18 @@
                 <span>TrAuck</span>
             </div>
             <nav>
-                <a href="#" class="nav-item active"><i class="fa-solid fa-id-card"></i> Drivers</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-truck"></i> Vehicles</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-route"></i> Trips</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> Load Plans</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-triangle-exclamation"></i> Incidents</a>
+                <a href="#" class="nav-item active" data-target="drivers"><i class="fa-solid fa-id-card"></i> Drivers</a>
+                <a href="#" class="nav-item" data-target="vehicles"><i class="fa-solid fa-truck"></i> Vehicles</a>
+                <a href="#" class="nav-item" data-target="trips"><i class="fa-solid fa-route"></i> Trips</a>
+                <a href="#" class="nav-item" data-target="loadplans"><i class="fa-solid fa-boxes-stacked"></i> Load Plans</a>
+                <a href="#" class="nav-item" data-target="incidents"><i class="fa-solid fa-triangle-exclamation"></i> Incidents</a>
             </nav>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
             <header class="top-header glass-panel">
-                <h1>Drivers Management</h1>
+                <h1 id="pageTitle">Drivers Management</h1>
                 <div class="user-profile">
                     <img src="https://i.pravatar.cc/150?img=11" alt="Admin">
                     <span>Admin</span>
@@ -36,55 +36,125 @@
             </header>
 
             <div class="content-area">
-                <!-- Add Driver Form -->
-                <section class="form-section glass-panel">
-                    <h2><i class="fa-solid fa-user-plus"></i> Add New Driver</h2>
-                    <form id="addDriverForm">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" required placeholder="Enter first name">
+                <!-- ================= DRIVERS VIEW ================= -->
+                <div id="drivers-view" class="view-section active">
+                    <section class="form-section glass-panel">
+                        <h2><i class="fa-solid fa-user-plus"></i> Add New Driver</h2>
+                        <form id="addDriverForm">
+                            <div class="form-group"><label>First Name</label><input type="text" id="driverFirstName" required></div>
+                            <div class="form-group"><label>Last Name</label><input type="text" id="driverLastName" required></div>
+                            <div class="form-group"><label>License Number</label><input type="text" id="driverLicense" required></div>
+                            <button type="submit" class="btn-primary">Add Driver</button>
+                        </form>
+                    </section>
+                    <section class="table-section glass-panel">
+                        <div class="table-header"><h2><i class="fa-solid fa-users"></i> Fleet Drivers</h2></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>ID</th><th>Name</th><th>License</th><th>Status</th></tr></thead>
+                                <tbody id="driversTableBody"></tbody>
+                            </table>
                         </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" required placeholder="Enter last name">
-                        </div>
-                        <div class="form-group">
-                            <label for="licenseNumber">License Number</label>
-                            <input type="text" id="licenseNumber" required placeholder="e.g. AB-123456">
-                        </div>
-                        <button type="submit" class="btn-primary" id="submitBtn">
-                            <span>Add Driver</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
-                </section>
+                    </section>
+                </div>
 
-                <!-- Drivers Table -->
-                <section class="table-section glass-panel">
-                    <div class="table-header">
-                        <h2><i class="fa-solid fa-users"></i> Fleet Drivers</h2>
-                        <button class="btn-icon" onclick="fetchDrivers()"><i class="fa-solid fa-rotate-right"></i></button>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="driversTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>License Number</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="driversTableBody">
-                                <!-- Dynamic rows go here -->
-                                <tr>
-                                    <td colspan="5" class="text-center loading">Loading drivers...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
+                <!-- ================= VEHICLES VIEW ================= -->
+                <div id="vehicles-view" class="view-section" style="display: none;">
+                    <section class="form-section glass-panel">
+                        <h2><i class="fa-solid fa-plus"></i> Add New Vehicle</h2>
+                        <form id="addVehicleForm">
+                            <div class="form-group"><label>Make</label><input type="text" id="vehicleMake" required></div>
+                            <div class="form-group"><label>Model</label><input type="text" id="vehicleModel" required></div>
+                            <div class="form-group"><label>License Plate</label><input type="text" id="vehiclePlate" required></div>
+                            <div class="form-group"><label>Capacity (Tons)</label><input type="number" step="0.1" id="vehicleCapacity" required></div>
+                            <button type="submit" class="btn-primary">Add Vehicle</button>
+                        </form>
+                    </section>
+                    <section class="table-section glass-panel">
+                        <div class="table-header"><h2><i class="fa-solid fa-truck"></i> Vehicles</h2></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>ID</th><th>Make & Model</th><th>License Plate</th><th>Capacity</th></tr></thead>
+                                <tbody id="vehiclesTableBody"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ================= TRIPS VIEW ================= -->
+                <div id="trips-view" class="view-section" style="display: none;">
+                    <section class="form-section glass-panel">
+                        <h2><i class="fa-solid fa-plus"></i> Add New Trip</h2>
+                        <form id="addTripForm">
+                            <div class="form-group"><label>Origin</label><input type="text" id="tripOrigin" required></div>
+                            <div class="form-group"><label>Destination</label><input type="text" id="tripDestination" required></div>
+                            <div class="form-group"><label>Driver ID</label><input type="text" id="tripDriver" required placeholder="GUID"></div>
+                            <div class="form-group"><label>Vehicle ID</label><input type="text" id="tripVehicle" required placeholder="GUID"></div>
+                            <button type="submit" class="btn-primary">Create Trip</button>
+                        </form>
+                    </section>
+                    <section class="table-section glass-panel">
+                        <div class="table-header"><h2><i class="fa-solid fa-route"></i> Trips</h2></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>ID</th><th>Route</th><th>Driver ID</th><th>Vehicle ID</th><th>Status</th></tr></thead>
+                                <tbody id="tripsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ================= LOAD PLANS VIEW ================= -->
+                <div id="loadplans-view" class="view-section" style="display: none;">
+                    <section class="form-section glass-panel">
+                        <h2><i class="fa-solid fa-plus"></i> Create Load Plan</h2>
+                        <form id="addLoadPlanForm">
+                            <div class="form-group"><label>Trip ID</label><input type="text" id="loadTrip" required placeholder="GUID"></div>
+                            <div class="form-group"><label>Description</label><input type="text" id="loadDesc" required></div>
+                            <div class="form-group"><label>Total Weight (Tons)</label><input type="number" step="0.1" id="loadWeight" required></div>
+                            <button type="submit" class="btn-primary">Add Load Plan</button>
+                        </form>
+                    </section>
+                    <section class="table-section glass-panel">
+                        <div class="table-header"><h2><i class="fa-solid fa-boxes-stacked"></i> Load Plans</h2></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>ID</th><th>Trip ID</th><th>Description</th><th>Weight</th></tr></thead>
+                                <tbody id="loadPlansTableBody"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ================= INCIDENTS VIEW ================= -->
+                <div id="incidents-view" class="view-section" style="display: none;">
+                    <section class="form-section glass-panel">
+                        <h2><i class="fa-solid fa-plus"></i> Report Incident</h2>
+                        <form id="addIncidentForm">
+                            <div class="form-group"><label>Trip ID</label><input type="text" id="incidentTrip" required placeholder="GUID"></div>
+                            <div class="form-group"><label>Description</label><input type="text" id="incidentDesc" required></div>
+                            <div class="form-group">
+                                <label>Severity</label>
+                                <select id="incidentSeverity" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.2); color: white; border: 1px solid var(--glass-border); border-radius: 8px;">
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-primary" style="background: var(--danger); margin-top:15px;">Report Incident</button>
+                        </form>
+                    </section>
+                    <section class="table-section glass-panel">
+                        <div class="table-header"><h2><i class="fa-solid fa-triangle-exclamation"></i> Incidents</h2></div>
+                        <div class="table-responsive">
+                            <table>
+                                <thead><tr><th>ID</th><th>Trip ID</th><th>Description</th><th>Severity</th><th>Reported At</th></tr></thead>
+                                <tbody id="incidentsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
             </div>
         </main>
     </div>
