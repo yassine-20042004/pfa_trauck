@@ -1,0 +1,6 @@
+@TrAuck.Api_HostAddress = http://localhost:5198
+
+GET {{TrAuck.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

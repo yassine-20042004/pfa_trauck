@@ -1,0 +1,17 @@
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Infrastructure.deps.json
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Infrastructure.dll
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Infrastructure.pdb
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Application.dll
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Domain.dll
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Application.pdb
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\bin\Debug\net10.0\TrAuck.Domain.pdb
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.AssemblyInfo.cs
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.I.5E208259.Up2Date
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.dll
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\refint\TrAuck.Infrastructure.dll
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\TrAuck.Infrastructure.pdb
+C:\Users\salah\OneDrive\Desktop\pfa_trauck-main\TrAuck.Infrastructure\obj\Debug\net10.0\ref\TrAuck.Infrastructure.dll
