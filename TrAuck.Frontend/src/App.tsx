@@ -1,6 +1,6 @@
 import "leaflet/dist/leaflet.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { LandingPage } from "./features/landing/LandingPage"
+import LandingPage from "./features/landing/LandingPage"
 import { LoginPage } from "./features/auth/LoginPage"
 import { AdminLayout } from "./features/admin/AdminLayout"
 import { DashboardPage } from "./features/admin/DashboardPage"

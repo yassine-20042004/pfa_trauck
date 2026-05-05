@@ -5,6 +5,70 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 
+const navItems = [
+  { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { name: "Fleet", href: "/admin/fleet", icon: Truck },
+  { name: "Drivers", href: "/admin/drivers", icon: Users },
+  { name: "Vehicles", href: "/admin/vehicles", icon: Truck },
+  { name: "Trips", href: "/admin/trips", icon: RouteIcon },
+  { name: "Load Planning", href: "/admin/loads", icon: PackageSearch },
+  { name: "Incidents", href: "/admin/incidents", icon: AlertTriangle },
+];
+
+const mockNotifications = [
+  { id: 1, title: "TRK-005 Rerouted", time: "2 min ago", type: "alert" },
+  { id: 2, title: "Delivery Complete", time: "15 min ago", type: "success" },
+  { id: 3, title: "System Update", time: "1 hour ago", type: "info" },
+];
+
+const SidebarContent = ({ pathname, layoutIdPrefix }: { pathname: string, layoutIdPrefix: string }) => (
+  <>
+    <div className="flex h-20 items-center px-8 border-b border-white/5 shrink-0">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+          <Truck className="h-4 w-4 text-white" />
+        </div>
+        <h1 className="text-xl font-bold tracking-tight text-white">TrAuck<span className="text-blue-500">.</span></h1>
+      </div>
+    </div>
+    
+    <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
+      {navItems.map((item) => {
+        const isActive = pathname === item.href;
+        return (
+          <Link
+            key={item.name}
+            to={item.href}
+            className="relative block"
+          >
+            {isActive && (
+              <motion.div 
+                layoutId={`${layoutIdPrefix}-active-nav`}
+                className="absolute inset-0 bg-white/10 rounded-xl"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              />
+            )}
+            <div className={cn(
+              "relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors z-10",
+              isActive ? "text-white" : "text-zinc-400 hover:text-white hover:bg-white/5"
+            )}>
+              <item.icon className={cn("h-4 w-4", isActive && "text-blue-400")} />
+              {item.name}
+            </div>
+          </Link>
+        );
+      })}
+    </nav>
+
+    <div className="p-4 border-t border-white/5 shrink-0">
+      <button className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
+        <Settings className="h-4 w-4" />
+        Settings
+      </button>
+    </div>
+  </>
+);
+
 export function AdminLayout() {
   const location = useLocation();
   const [time, setTime] = useState(new Date());
@@ -21,70 +85,6 @@ export function AdminLayout() {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navItems = [
-    { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-    { name: "Fleet", href: "/admin/fleet", icon: Truck },
-    { name: "Drivers", href: "/admin/drivers", icon: Users },
-    { name: "Vehicles", href: "/admin/vehicles", icon: Truck },
-    { name: "Trips", href: "/admin/trips", icon: RouteIcon },
-    { name: "Load Planning", href: "/admin/loads", icon: PackageSearch },
-    { name: "Incidents", href: "/admin/incidents", icon: AlertTriangle },
-  ];
-
-  const mockNotifications = [
-    { id: 1, title: "TRK-005 Rerouted", time: "2 min ago", type: "alert" },
-    { id: 2, title: "Delivery Complete", time: "15 min ago", type: "success" },
-    { id: 3, title: "System Update", time: "1 hour ago", type: "info" },
-  ];
-
-  const SidebarContent = () => (
-    <>
-      <div className="flex h-20 items-center px-8 border-b border-white/5 shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-            <Truck className="h-4 w-4 text-white" />
-          </div>
-          <h1 className="text-xl font-bold tracking-tight text-white">TrAuck<span className="text-blue-500">.</span></h1>
-        </div>
-      </div>
-      
-      <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
-        {navItems.map((item) => {
-          const isActive = location.pathname === item.href;
-          return (
-            <Link
-              key={item.name}
-              to={item.href}
-              className="relative block"
-            >
-              {isActive && (
-                <motion.div 
-                  layoutId="active-nav"
-                  className="absolute inset-0 bg-white/10 rounded-xl"
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                />
-              )}
-              <div className={cn(
-                "relative flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors z-10",
-                isActive ? "text-white" : "text-zinc-400 hover:text-white hover:bg-white/5"
-              )}>
-                <item.icon className={cn("h-4 w-4", isActive && "text-blue-400")} />
-                {item.name}
-              </div>
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="p-4 border-t border-white/5 shrink-0">
-        <button className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
-          <Settings className="h-4 w-4" />
-          Settings
-        </button>
-      </div>
-    </>
-  );
-
   return (
     <div className="flex h-[100dvh] bg-black text-white selection:bg-primary selection:text-primary-foreground font-sans dark overflow-hidden">
       {/* Dynamic Background */}
@@ -99,7 +99,7 @@ export function AdminLayout() {
         animate={{ x: 0 }}
         className="w-64 border-r border-white/10 bg-zinc-950/50 backdrop-blur-xl hidden md:flex flex-col z-20 relative shrink-0"
       >
-        <SidebarContent />
+        <SidebarContent pathname={location.pathname} layoutIdPrefix="desktop" />
       </motion.aside>
 
       {/* Mobile Sidebar Overlay */}
@@ -120,7 +120,7 @@ export function AdminLayout() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed inset-y-0 left-0 w-64 border-r border-white/10 bg-zinc-950/90 backdrop-blur-xl flex flex-col z-50 md:hidden shadow-2xl"
             >
-              <SidebarContent />
+              <SidebarContent pathname={location.pathname} layoutIdPrefix="mobile" />
             </motion.aside>
           </>
         )}
