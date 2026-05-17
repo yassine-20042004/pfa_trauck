@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "TrAuck.Infrastructure/1.0.0": {
+        "dependencies": {
+          "TrAuck.Application": "1.0.0",
+          "TrAuck.Domain": "1.0.0"
+        },
+        "runtime": {
+          "TrAuck.Infrastructure.dll": {}
+        }
+      },
+      "TrAuck.Application/1.0.0": {
+        "dependencies": {
+          "TrAuck.Domain": "1.0.0"
+        },
+        "runtime": {
+          "TrAuck.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "TrAuck.Domain/1.0.0": {
+        "runtime": {
+          "TrAuck.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TrAuck.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TrAuck.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TrAuck.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
