@@ -2,6 +2,7 @@ import "leaflet/dist/leaflet.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./features/landing/LandingPage"
 import { LoginPage } from "./features/auth/LoginPage"
+import { RegisterPage } from "./features/auth/RegisterPage"
 import { AdminLayout } from "./features/admin/AdminLayout"
 import { DashboardPage } from "./features/admin/DashboardPage"
 import { FleetPage } from "./features/admin/FleetPage"
@@ -10,6 +11,7 @@ import { VehiclesPage } from "./features/admin/VehiclesPage"
 import { TripsPage } from "./features/admin/TripsPage"
 import { IncidentsPage } from "./features/admin/IncidentsPage"
 import { LoadsPage } from "./features/admin/LoadsPage"
+import { AccessRequestsPage } from "./features/admin/AccessRequestsPage"
 import { DriverLayout } from "./features/driver/DriverLayout"
 import { TripPage } from "./features/driver/TripPage"
 
@@ -19,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
@@ -29,6 +32,7 @@ function App() {
           <Route path="trips" element={<TripsPage />} />
           <Route path="incidents" element={<IncidentsPage />} />
           <Route path="loads" element={<LoadsPage />} />
+          <Route path="requests" element={<AccessRequestsPage />} />
         </Route>
 
         {/* Driver Routes */}

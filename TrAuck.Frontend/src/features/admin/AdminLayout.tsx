@@ -13,6 +13,7 @@ const navItems = [
   { name: "Trips", href: "/admin/trips", icon: RouteIcon },
   { name: "Load Planning", href: "/admin/loads", icon: PackageSearch },
   { name: "Incidents", href: "/admin/incidents", icon: AlertTriangle },
+  { name: "Access Requests", href: "/admin/requests", icon: Users },
 ];
 
 const mockNotifications = [
@@ -60,11 +61,15 @@ const SidebarContent = ({ pathname, layoutIdPrefix }: { pathname: string, layout
       })}
     </nav>
 
-    <div className="p-4 border-t border-white/5 shrink-0">
+    <div className="p-4 border-t border-white/5 shrink-0 space-y-1">
       <button className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
         <Settings className="h-4 w-4" />
         Settings
       </button>
+      <Link to="/login" className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        Log out
+      </Link>
     </div>
   </>
 );

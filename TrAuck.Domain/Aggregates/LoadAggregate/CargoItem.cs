@@ -1,6 +1,7 @@
-﻿namespace TrAuckDomain.Aggregates.LoadAggregate;
+namespace TrAuckDomain.Aggregates.LoadAggregate;
 
 public class CargoItem
 {
+    public Guid Id { get; set; }
 }
 

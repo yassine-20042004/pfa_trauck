@@ -100,7 +100,7 @@ export function LoginPage() {
           </form>
           
           <p className="text-center text-sm text-zinc-500 mt-8">
-            Don't have an account? <a href="#" className="text-blue-400 hover:text-blue-300">Request access</a>
+            Don't have an account? <Link to="/register" className="text-blue-400 hover:text-blue-300">Request access</Link>
           </p>
         </div>
       </motion.div>
