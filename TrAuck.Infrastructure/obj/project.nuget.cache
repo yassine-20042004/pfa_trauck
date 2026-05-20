@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "luhA4oISymVW7aoGE+F2mjF+BwmZDmG3i+RN629RDI999ObazKCwMWLPqtwlOGJ7NyfmJnbM2VikY5eS/aUzRg==",
+  "dgSpecHash": "CFi3SHXHk6t1z42q5ZZ54f3MGsdMHF/M5MpL9bIZ0JyYNr8sHXTSNyruXvZiJDLmRNeS7yNrLaDpo2H/ajCJXQ==",
   "success": true,
   "projectFilePath": "/home/yosakuchan/Desktop/Trauck/pfa_trauck/TrAuck.Infrastructure/TrAuck.Infrastructure.csproj",
   "expectedPackageFiles": [
-    "/home/yosakuchan/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/bcrypt.net-next/4.2.0/bcrypt.net-next.4.2.0.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/mediatr/12.2.0/mediatr.12.2.0.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/microsoft.entityframeworkcore/8.0.4/microsoft.entityframeworkcore.8.0.4.nupkg.sha512",
@@ -20,8 +20,13 @@
     "/home/yosakuchan/.nuget/packages/microsoft.extensions.logging.abstractions/8.0.0/microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/microsoft.extensions.options/8.0.0/microsoft.extensions.options.8.0.0.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/microsoft.extensions.primitives/8.0.0/microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/microsoft.identitymodel.abstractions/7.1.2/microsoft.identitymodel.abstractions.7.1.2.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/microsoft.identitymodel.jsonwebtokens/7.1.2/microsoft.identitymodel.jsonwebtokens.7.1.2.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/microsoft.identitymodel.logging/7.1.2/microsoft.identitymodel.logging.7.1.2.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/microsoft.identitymodel.tokens/7.1.2/microsoft.identitymodel.tokens.7.1.2.nupkg.sha512",
     "/home/yosakuchan/.nuget/packages/npgsql/8.0.3/npgsql.8.0.3.nupkg.sha512",
-    "/home/yosakuchan/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.4/npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512"
+    "/home/yosakuchan/.nuget/packages/npgsql.entityframeworkcore.postgresql/8.0.4/npgsql.entityframeworkcore.postgresql.8.0.4.nupkg.sha512",
+    "/home/yosakuchan/.nuget/packages/system.identitymodel.tokens.jwt/7.1.2/system.identitymodel.tokens.jwt.7.1.2.nupkg.sha512"
   ],
   "logs": []
 }

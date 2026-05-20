@@ -1,12 +1,21 @@
+import { useAuthStore } from "@/stores/authStore";
+
 const BASE_URL = "http://localhost:5198/api/v1";
 
 export async function apiRequest<T>(endpoint: string, method: string = "GET", body?: any): Promise<T> {
   try {
+    const token = useAuthStore.getState().token;
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     const response = await fetch(`${BASE_URL}${endpoint}`, {
       method,
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: body ? JSON.stringify(body) : undefined,
     });
 

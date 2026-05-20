@@ -3,17 +3,46 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Truck, UserCircle2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/authStore";
 
 export function LoginPage() {
   const [role, setRole] = useState<'dispatcher' | 'driver'>('dispatcher');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const setAuth = useAuthStore(state => state.setAuth);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (role === 'dispatcher') {
-      navigate('/admin');
-    } else {
-      navigate('/driver');
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5198/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Invalid credentials');
+      }
+
+      const data = await response.json();
+      setAuth(data);
+
+      if (data.role.toLowerCase() === 'dispatcher' || data.role.toLowerCase() === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/driver');
+      }
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,10 +92,13 @@ export function LoginPage() {
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
+            {error && <div className="p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-500 text-sm text-center">{error}</div>}
             <div className="space-y-2">
               <label className="text-sm font-medium text-zinc-300">Email address</label>
               <input 
                 type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="name@example.com"
                 required
@@ -79,6 +111,8 @@ export function LoginPage() {
               </div>
               <input 
                 type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="••••••••"
                 required
@@ -92,8 +126,8 @@ export function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -5 }}
               >
-                <Button type="submit" className="w-full py-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
-                  Sign In as {role === 'dispatcher' ? 'Admin' : 'Driver'}
+                <Button disabled={loading} type="submit" className="w-full py-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
+                  {loading ? 'Signing in...' : `Sign In as ${role === 'dispatcher' ? 'Admin' : 'Driver'}`}
                 </Button>
               </motion.div>
             </AnimatePresence>

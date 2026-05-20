@@ -18,6 +18,7 @@ public class AccessRequestsController : ControllerBase
     }
 
     [HttpPost]
+    [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public async Task<IActionResult> CreateAccessRequest([FromBody] CreateAccessRequestCommand command)
     {
         var id = await _mediator.Send(command);
