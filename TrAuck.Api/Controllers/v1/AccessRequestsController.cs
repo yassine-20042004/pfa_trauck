@@ -20,8 +20,15 @@ public class AccessRequestsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAccessRequest([FromBody] CreateAccessRequestCommand command)
     {
-        var id = await _mediator.Send(command);
-        return Ok(new { Id = id });
+        try
+        {
+            var id = await _mediator.Send(command);
+            return Ok(new { Id = id });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { Message = ex.Message });
+        }
     }
 
     [HttpGet("pending")]

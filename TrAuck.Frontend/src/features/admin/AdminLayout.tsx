@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 const navItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -22,7 +23,7 @@ const mockNotifications = [
   { id: 3, title: "System Update", time: "1 hour ago", type: "info" },
 ];
 
-const SidebarContent = ({ pathname, layoutIdPrefix }: { pathname: string, layoutIdPrefix: string }) => (
+const SidebarContent = ({ pathname, layoutIdPrefix, handleLogout }: { pathname: string, layoutIdPrefix: string, handleLogout: () => void }) => (
   <>
     <div className="flex h-20 items-center px-8 border-b border-white/5 shrink-0">
       <div className="flex items-center gap-3">
@@ -66,10 +67,10 @@ const SidebarContent = ({ pathname, layoutIdPrefix }: { pathname: string, layout
         <Settings className="h-4 w-4" />
         Settings
       </button>
-      <Link to="/login" className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
+      <button onClick={handleLogout} className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
         Log out
-      </Link>
+      </button>
     </div>
   </>
 );
@@ -79,6 +80,11 @@ export function AdminLayout() {
   const [time, setTime] = useState(new Date());
   const [showNotifications, setShowNotifications] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { logout, user } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -104,7 +110,7 @@ export function AdminLayout() {
         animate={{ x: 0 }}
         className="w-64 border-r border-white/10 bg-zinc-950/50 backdrop-blur-xl hidden md:flex flex-col z-20 relative shrink-0"
       >
-        <SidebarContent pathname={location.pathname} layoutIdPrefix="desktop" />
+        <SidebarContent pathname={location.pathname} layoutIdPrefix="desktop" handleLogout={handleLogout} />
       </motion.aside>
 
       {/* Mobile Sidebar Overlay */}
@@ -125,7 +131,7 @@ export function AdminLayout() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="fixed inset-y-0 left-0 w-64 border-r border-white/10 bg-zinc-950/90 backdrop-blur-xl flex flex-col z-50 md:hidden shadow-2xl"
             >
-              <SidebarContent pathname={location.pathname} layoutIdPrefix="mobile" />
+              <SidebarContent pathname={location.pathname} layoutIdPrefix="mobile" handleLogout={handleLogout} />
             </motion.aside>
           </>
         )}
@@ -206,7 +212,7 @@ export function AdminLayout() {
             </div>
 
             <div className="h-8 w-8 md:h-10 md:w-10 rounded-full border border-white/20 bg-gradient-to-tr from-zinc-800 to-zinc-700 overflow-hidden flex items-center justify-center shrink-0">
-              <span className="text-xs md:text-sm font-bold text-zinc-300">AD</span>
+              <span className="text-xs md:text-sm font-bold text-zinc-300">{user?.firstName?.[0]}{user?.lastName?.[0]}</span>
             </div>
           </div>
         </header>

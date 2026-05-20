@@ -8,6 +8,7 @@ export function RegisterPage() {
   const [role, setRole] = useState<'dispatcher' | 'driver'>('dispatcher');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -27,9 +28,10 @@ export function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
     try {
-      const response = await fetch('http://localhost:5198/api/v1/AccessRequests', {
+      const response = await fetch('http://localhost:5198/api/v1/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -39,22 +41,19 @@ export function RegisterPage() {
           lastName: formData.lastName,
           email: formData.email,
           password: formData.password,
-          requestedRole: role,
-          companyOrReason: formData.companyOrReason,
-          licenseNumber: role === 'driver' ? formData.licenseNumber : null,
-          yearsOfExperience: role === 'driver' && formData.yearsOfExperience ? parseInt(formData.yearsOfExperience) : null,
-          preferredVehicle: role === 'driver' ? formData.preferredVehicle : null
+          role: role === 'dispatcher' ? 'Admin' : 'Driver'
         })
       });
+
+      const data = await response.json().catch(() => ({}));
 
       if (response.ok) {
         setIsSuccess(true);
       } else {
-        console.error("Failed to submit request");
-        // Handle error (show toast, etc.)
+        setError(data.message || "Failed to submit request");
       }
     } catch (error) {
-      console.error("Network error:", error);
+      setError("Network error. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -246,6 +245,8 @@ export function RegisterPage() {
                 </AnimatePresence>
                 
                 <AnimatePresence mode="wait">
+                  {error && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
+                  
                   <motion.div
                     key="submit-btn"
                     initial={{ opacity: 0, y: 5 }}

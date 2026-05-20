@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TrAuckApplication.Common.Interfaces;
 using TrAuckDomain.Aggregates.IdentityAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrAuckApplication.Features.Identity;
 
@@ -31,6 +32,12 @@ public class CreateAccessRequestCommandHandler : IRequestHandler<CreateAccessReq
 
     public async Task<Guid> Handle(CreateAccessRequestCommand request, CancellationToken cancellationToken)
     {
+        var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email, cancellationToken);
+        if (!userExists)
+        {
+            throw new InvalidOperationException("Seuls les utilisateurs pré-enregistrés par l'administration peuvent demander un accès.");
+        }
+
         var entity = new AccessRequest
         {
             Id = Guid.NewGuid(),

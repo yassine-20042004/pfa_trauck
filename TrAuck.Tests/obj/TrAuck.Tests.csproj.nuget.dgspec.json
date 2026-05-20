@@ -1,42 +1,42 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Tests\\TrAuck.Tests.csproj": {}
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Tests\\TrAuck.Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\TrAuck.Api.csproj": {
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\TrAuck.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\TrAuck.Api.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\TrAuck.Api.csproj",
         "projectName": "TrAuck.Api",
-        "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\TrAuck.Api.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\TrAuck.Api.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj"
               },
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj"
               }
             }
           }
@@ -54,12 +54,18 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.OpenApi": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.15, )"
+              "version": "[8.0.4, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -81,40 +87,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj": {
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj",
         "projectName": "TrAuck.Application",
-        "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj"
               }
             }
           }
@@ -132,8 +138,22 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -150,37 +170,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj": {
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj",
         "projectName": "TrAuck.Domain",
-        "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -197,8 +217,8 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",
@@ -215,43 +235,43 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj",
         "projectName": "TrAuck.Infrastructure",
-        "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj"
               },
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj"
               }
             }
           }
@@ -269,8 +289,14 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -287,49 +313,49 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Tests\\TrAuck.Tests.csproj": {
+    "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Tests\\TrAuck.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Tests\\TrAuck.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Tests\\TrAuck.Tests.csproj",
         "projectName": "TrAuck.Tests",
-        "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Tests\\TrAuck.Tests.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Tests\\obj\\",
+        "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Tests\\TrAuck.Tests.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\TrAuck.Api.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Api\\TrAuck.Api.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\TrAuck.Api.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Api\\TrAuck.Api.csproj"
               },
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Application\\TrAuck.Application.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Application\\TrAuck.Application.csproj"
               },
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Domain\\TrAuck.Domain.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Domain\\TrAuck.Domain.csproj"
               },
-              "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\LENOVO\\Desktop\\work st\\projet_pfa\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj"
+              "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\pc\\Desktop\\pfa_4anne\\pfa_trauck\\TrAuck.Infrastructure\\TrAuck.Infrastructure.csproj"
               }
             }
           }
@@ -347,8 +373,8 @@
         "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
@@ -383,7 +409,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

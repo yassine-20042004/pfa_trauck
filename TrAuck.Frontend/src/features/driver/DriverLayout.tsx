@@ -2,9 +2,15 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 import { ListTodo, AlertTriangle, User, Navigation2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../auth/AuthContext";
 
 export function DriverLayout() {
   const location = useLocation();
+  const { logout, user } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
 
   const navItems = [
     { name: "Live Route", href: "/driver", icon: Navigation2 },
@@ -24,7 +30,7 @@ export function DriverLayout() {
             </div>
           </div>
           <div className="flex flex-col">
-            <h1 className="text-sm font-extrabold text-white leading-tight tracking-wide">Yassine J.</h1>
+            <h1 className="text-sm font-extrabold text-white leading-tight tracking-wide">{user?.firstName} {user?.lastName}</h1>
             <span className="text-[10px] text-zinc-400 font-mono tracking-wider">TRK-924 • VOLVO</span>
           </div>
         </div>
@@ -38,9 +44,9 @@ export function DriverLayout() {
              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Online</span>
            </div>
            
-           <Link to="/login" className="text-zinc-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-white/5">
+           <button onClick={handleLogout} className="text-zinc-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-white/5">
              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-           </Link>
+           </button>
         </div>
       </header>
 

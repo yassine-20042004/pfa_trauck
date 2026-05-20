@@ -3,17 +3,47 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Truck, UserCircle2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "./AuthContext";
 
 export function LoginPage() {
   const [role, setRole] = useState<'dispatcher' | 'driver'>('dispatcher');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (role === 'dispatcher') {
-      navigate('/admin');
-    } else {
-      navigate('/driver');
+    setIsLoading(true);
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:5198/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        login(data.token);
+        // We can parse the token role, but for now we just use the selected role in UI or fetch the token payload
+        // The App.tsx ProtectedRoute will kick them out if they pick the wrong dashboard anyway
+        if (role === 'dispatcher') {
+          navigate('/admin');
+        } else {
+          navigate('/driver');
+        }
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      setError('Network error. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +97,8 @@ export function LoginPage() {
               <label className="text-sm font-medium text-zinc-300">Email address</label>
               <input 
                 type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="name@example.com"
                 required
@@ -79,11 +111,15 @@ export function LoginPage() {
               </div>
               <input 
                 type="password" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
                 placeholder="••••••••"
                 required
               />
             </div>
+
+            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
             
             <AnimatePresence mode="wait">
               <motion.div
@@ -92,8 +128,8 @@ export function LoginPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -5 }}
               >
-                <Button type="submit" className="w-full py-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
-                  Sign In as {role === 'dispatcher' ? 'Admin' : 'Driver'}
+                <Button type="submit" disabled={isLoading} className="w-full py-6 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all">
+                  {isLoading ? 'Signing in...' : `Sign In as ${role === 'dispatcher' ? 'Admin' : 'Driver'}`}
                 </Button>
               </motion.div>
             </AnimatePresence>
