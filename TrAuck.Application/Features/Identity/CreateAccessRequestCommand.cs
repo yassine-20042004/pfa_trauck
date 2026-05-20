@@ -33,9 +33,15 @@ public class CreateAccessRequestCommandHandler : IRequestHandler<CreateAccessReq
     public async Task<Guid> Handle(CreateAccessRequestCommand request, CancellationToken cancellationToken)
     {
         var userExists = await _context.Users.AnyAsync(u => u.Email == request.Email, cancellationToken);
-        if (!userExists)
+        if (userExists)
         {
-            throw new InvalidOperationException("Seuls les utilisateurs pré-enregistrés par l'administration peuvent demander un accès.");
+            throw new InvalidOperationException("Un compte avec cet email existe déjà.");
+        }
+
+        var pendingRequestExists = await _context.AccessRequests.AnyAsync(r => r.Email == request.Email && r.Status == "Pending", cancellationToken);
+        if (pendingRequestExists)
+        {
+            throw new InvalidOperationException("Une demande d'accès est déjà en attente pour cet email.");
         }
 
         var entity = new AccessRequest

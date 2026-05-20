@@ -31,7 +31,7 @@ export function RegisterPage() {
     setError('');
     
     try {
-      const response = await fetch('http://localhost:5198/api/v1/auth/signup', {
+      const response = await fetch('http://localhost:5198/api/v1/AccessRequests', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -41,7 +41,11 @@ export function RegisterPage() {
           lastName: formData.lastName,
           email: formData.email,
           password: formData.password,
-          role: role === 'dispatcher' ? 'Admin' : 'Driver'
+          requestedRole: role === 'dispatcher' ? 'Admin' : 'Driver',
+          companyOrReason: formData.companyOrReason,
+          licenseNumber: role === 'driver' ? formData.licenseNumber : null,
+          yearsOfExperience: role === 'driver' && formData.yearsOfExperience ? parseInt(formData.yearsOfExperience) : null,
+          preferredVehicle: role === 'driver' ? formData.preferredVehicle : null
         })
       });
 

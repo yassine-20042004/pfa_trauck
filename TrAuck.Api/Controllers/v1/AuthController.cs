@@ -77,4 +77,27 @@ public class AuthController : ControllerBase
 
         return Ok(new { message = $"Migrated {migratedCount} passwords successfully." });
     }
+
+    // List all users (for debugging)
+    [HttpGet("users")]
+    public async Task<IActionResult> GetUsers()
+    {
+        var users = await _context.Users
+            .Select(u => new { u.Id, u.Email, u.FirstName, u.LastName, u.Role, u.IsActive, u.CreatedAt })
+            .ToListAsync();
+        return Ok(users);
+    }
+
+    // Delete a user by email (for debugging)
+    [HttpDelete("users/{email}")]
+    public async Task<IActionResult> DeleteUser(string email)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null)
+            return NotFound(new { Message = $"User with email '{email}' not found." });
+
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync(CancellationToken.None);
+        return Ok(new { Message = $"User '{email}' deleted." });
+    }
 }

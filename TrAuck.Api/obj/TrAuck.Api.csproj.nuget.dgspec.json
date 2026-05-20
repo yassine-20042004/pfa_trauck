@@ -314,7 +314,7 @@
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[7.1.2, )"
+              "version": "[8.18.0, )"
             }
           },
           "imports": [
