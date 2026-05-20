@@ -1,40 +1,48 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.Incidents;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class IncidentDto {
-    public string? tripId { get; set; }
-    public string? description { get; set; }
-    public string? severity { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class IncidentsController : ControllerBase
 {
-    private static readonly List<object> _incidents = new List<object>
+    private readonly IMediator _mediator;
+
+    public IncidentsController(IMediator mediator)
     {
-        new { id = "1", tripId = "1", description = "Heavy traffic at Checkpoint A", reportedAt = DateTime.UtcNow.ToString("o"), severity = "Low" },
-        new { id = "2", tripId = "2", description = "Engine overheat detected", reportedAt = DateTime.UtcNow.ToString("o"), severity = "High" }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_incidents);
+        var incidents = await _mediator.Send(new GetIncidentsQuery(), cancellationToken);
+        return Ok(incidents);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] IncidentDto incident)
+    public async Task<IActionResult> Post([FromBody] CreateIncidentDto dto, CancellationToken cancellationToken)
     {
-        var incidentObj = new { 
-            id = Guid.NewGuid().ToString(),
-            tripId = incident.tripId,
-            description = incident.description,
-            reportedAt = DateTime.UtcNow.ToString("o"),
-            severity = incident.severity
+        // Accept both string and Guid for tripId
+        Guid.TryParse(dto.TripId, out var tripGuid);
+
+        var command = new CreateIncidentCommand
+        {
+            TripId = tripGuid,
+            Description = dto.Description ?? string.Empty,
+            Severity = dto.Severity ?? "Low"
         };
-        _incidents.Add(incidentObj);
-        return Created("", incidentObj);
+
+        var incident = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/incidents/{incident.Id}", incident);
     }
+}
+
+public class CreateIncidentDto
+{
+    public string? TripId { get; set; }
+    public string? Description { get; set; }
+    public string? Severity { get; set; }
 }

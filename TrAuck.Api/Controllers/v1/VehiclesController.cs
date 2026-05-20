@@ -1,41 +1,59 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.Vehicles;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class VehicleDto {
-    public string? make { get; set; }
-    public string? model { get; set; }
-    public string? licensePlate { get; set; }
-    public double capacity { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class VehiclesController : ControllerBase
 {
-    private static readonly List<object> _vehicles = new List<object>
+    private readonly IMediator _mediator;
+
+    public VehiclesController(IMediator mediator)
     {
-        new { id = "1", make = "Volvo", model = "FH16", licensePlate = "ABC-123", capacity = 40.0 },
-        new { id = "2", make = "Mercedes", model = "Actros", licensePlate = "DEF-456", capacity = 35.0 }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_vehicles);
+        var vehicles = await _mediator.Send(new GetVehiclesQuery(), cancellationToken);
+        return Ok(vehicles);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] VehicleDto vehicle)
+    public async Task<IActionResult> Post([FromBody] CreateVehicleDto dto, CancellationToken cancellationToken)
     {
-        var vehicleObj = new { 
-            id = Guid.NewGuid().ToString(),
-            make = vehicle.make,
-            model = vehicle.model,
-            licensePlate = vehicle.licensePlate,
-            capacity = vehicle.capacity
+        var command = new CreateVehicleCommand
+        {
+            Make = dto.Make ?? string.Empty,
+            Model = dto.Model ?? string.Empty,
+            // Map frontend "licensePlate"/"capacity" fields to domain names
+            PlateNumber = dto.LicensePlate ?? dto.PlateNumber ?? string.Empty,
+            CapacityTons = dto.Capacity > 0 ? dto.Capacity : dto.CapacityTons,
+            Type = dto.Type ?? "CargoVan",
+            Year = dto.Year > 0 ? dto.Year : DateTime.UtcNow.Year,
+            Status = dto.Status ?? "Available"
         };
-        _vehicles.Add(vehicleObj);
-        return Created("", vehicleObj);
+
+        var vehicle = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/vehicles/{vehicle.Id}", vehicle);
     }
+}
+
+// Flexible DTO accepts both camelCase frontend names and domain names
+public class CreateVehicleDto
+{
+    public string? Make { get; set; }
+    public string? Model { get; set; }
+    // Frontend sends "licensePlate"; domain uses "PlateNumber"
+    public string? LicensePlate { get; set; }
+    public string? PlateNumber { get; set; }
+    // Frontend sends "capacity"; domain uses "CapacityTons"
+    public double Capacity { get; set; }
+    public double CapacityTons { get; set; }
+    public string? Type { get; set; }
+    public int Year { get; set; }
+    public string? Status { get; set; }
 }

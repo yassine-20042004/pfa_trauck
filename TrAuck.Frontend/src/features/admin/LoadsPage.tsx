@@ -53,13 +53,8 @@ export function LoadsPage() {
   const handleAddLoadPlan = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (isBackendOffline) {
-        const newPlan = { ...formData, id: Math.random().toString() };
-        setLoadPlans([...loadPlans, newPlan]);
-      } else {
-        await apiRequest("/loadplans", "POST", formData);
-        await fetchData();
-      }
+      await apiRequest("/loadplans", "POST", formData);
+      await fetchData();
       setFormData({ tripId: "", description: "", totalWeight: 0 });
     } catch (error) {
       console.error("Failed to add load plan", error);

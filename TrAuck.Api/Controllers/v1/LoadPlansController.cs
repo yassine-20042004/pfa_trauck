@@ -1,39 +1,48 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.LoadPlans;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class LoadPlanDto {
-    public string? tripId { get; set; }
-    public string? description { get; set; }
-    public double totalWeight { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class LoadPlansController : ControllerBase
 {
-    private static readonly List<object> _loadPlans = new List<object>
+    private readonly IMediator _mediator;
+
+    public LoadPlansController(IMediator mediator)
     {
-        new { id = "1", tripId = "1", description = "Medical Supplies for Tangier Port", totalWeight = 500.0 },
-        new { id = "2", tripId = "2", description = "Electronics Batch A", totalWeight = 1200.0 }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_loadPlans);
+        var loadPlans = await _mediator.Send(new GetLoadPlansQuery(), cancellationToken);
+        return Ok(loadPlans);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] LoadPlanDto loadPlan)
+    public async Task<IActionResult> Post([FromBody] CreateLoadPlanDto dto, CancellationToken cancellationToken)
     {
-        var planObj = new { 
-            id = Guid.NewGuid().ToString(),
-            tripId = loadPlan.tripId,
-            description = loadPlan.description,
-            totalWeight = loadPlan.totalWeight
+        // Accept both string and Guid for tripId
+        Guid.TryParse(dto.TripId, out var tripGuid);
+
+        var command = new CreateLoadPlanCommand
+        {
+            TripId = tripGuid,
+            Description = dto.Description ?? string.Empty,
+            TotalWeight = dto.TotalWeight
         };
-        _loadPlans.Add(planObj);
-        return Created("", planObj);
+
+        var loadPlan = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/loadplans/{loadPlan.Id}", loadPlan);
     }
+}
+
+public class CreateLoadPlanDto
+{
+    public string? TripId { get; set; }
+    public string? Description { get; set; }
+    public double TotalWeight { get; set; }
 }

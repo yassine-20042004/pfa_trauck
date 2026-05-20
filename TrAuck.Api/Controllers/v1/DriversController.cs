@@ -1,44 +1,49 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.Drivers;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class DriverDto {
-    public string? firstName { get; set; }
-    public string? lastName { get; set; }
-    public string? licenseNumber { get; set; }
-    public string? phone { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class DriversController : ControllerBase
 {
-    private static readonly List<object> _drivers = new List<object>
+    private readonly IMediator _mediator;
+
+    public DriversController(IMediator mediator)
     {
-        new { id = "1", firstName = "Salah Eddine", lastName = "A.", licenseNumber = "LIC-001", isAvailable = true },
-        new { id = "2", firstName = "Anas", lastName = "B.", licenseNumber = "LIC-002", isAvailable = false },
-        new { id = "3", firstName = "Yassine", lastName = "J.", licenseNumber = "LIC-003", isAvailable = true }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_drivers);
+        var drivers = await _mediator.Send(new GetDriversQuery(), cancellationToken);
+        return Ok(drivers);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] DriverDto driver)
+    public async Task<IActionResult> Post([FromBody] CreateDriverDto dto, CancellationToken cancellationToken)
     {
-        var driverObj = new { 
-            id = Guid.NewGuid().ToString(),
-            firstName = driver.firstName,
-            lastName = driver.lastName,
-            licenseNumber = driver.licenseNumber,
-            phone = driver.phone ?? "+212 600 000000",
-            rating = 5.0,
-            isAvailable = true
+        var command = new CreateDriverCommand
+        {
+            FirstName = dto.FirstName ?? string.Empty,
+            LastName = dto.LastName ?? string.Empty,
+            LicenseNumber = dto.LicenseNumber ?? string.Empty,
+            Phone = dto.Phone ?? string.Empty,
+            UserId = dto.UserId
         };
-        _drivers.Add(driverObj);
-        return Created("", driverObj);
+
+        var driver = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/drivers/{driver.Id}", driver);
     }
+}
+
+public class CreateDriverDto
+{
+    public string? FirstName { get; set; }
+    public string? LastName { get; set; }
+    public string? LicenseNumber { get; set; }
+    public string? Phone { get; set; }
+    public Guid UserId { get; set; } = Guid.Empty;
 }

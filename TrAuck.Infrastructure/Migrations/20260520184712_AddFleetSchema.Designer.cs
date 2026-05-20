@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TrAuckInfrastructure.Persistence;
@@ -11,9 +12,11 @@ using TrAuckInfrastructure.Persistence;
 namespace TrAuck.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260520184712_AddFleetSchema")]
+    partial class AddFleetSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,12 +189,12 @@ namespace TrAuck.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            CreatedAt = new DateTime(2026, 5, 20, 19, 8, 48, 419, DateTimeKind.Utc).AddTicks(2970),
+                            CreatedAt = new DateTime(2026, 5, 20, 18, 47, 11, 760, DateTimeKind.Utc).AddTicks(1681),
                             Email = "admin@admin.com",
                             FirstName = "System",
                             IsActive = true,
                             LastName = "Admin",
-                            PasswordHash = "$2a$11$y4aSdXgEFFN62EOM/9g5LegdjXQx2ohi8m54yXt82OxHLUyl3EKpq",
+                            PasswordHash = "$2a$11$HJeGMMJPN8cUcQ8OBfJWguyruOlYXBUpqj1NpmZENO.YwfnoCy/8S",
                             Role = "Admin"
                         });
                 });
@@ -213,19 +216,6 @@ namespace TrAuck.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<double>("TotalWeight")
-                        .HasColumnType("double precision");
-
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.ToTable("LoadPlans");
@@ -242,59 +232,10 @@ namespace TrAuck.Infrastructure.Migrations
                     b.ToTable("DeliveryStops");
                 });
 
-            modelBuilder.Entity("TrAuckDomain.Aggregates.TripAggregate.Incident", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ReportedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Severity")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("TripId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Incidents");
-                });
-
             modelBuilder.Entity("TrAuckDomain.Aggregates.TripAggregate.Trip", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DepartedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Destination")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("DriverId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Origin")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("VehicleId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");

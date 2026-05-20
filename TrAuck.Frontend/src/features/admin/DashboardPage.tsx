@@ -1,8 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Truck, AlertCircle, Package, Activity, MapPin, Clock, TrendingUp } from "lucide-react";
+import { Truck, AlertCircle, Package, Activity, MapPin, Clock, TrendingUp, Users } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
+import { apiRequest } from "@/lib/api";
 
 // Real Casablanca routes (lat/lng)
 const DIJKSTRA_ROUTE: [number, number][] = [
@@ -33,15 +34,52 @@ const item: Variants = {
 };
 
 export function DashboardPage() {
-  // Mock Real-time Data
+  // Live API data
+  const [vehicles, setVehicles] = useState<any[]>([]);
+  const [drivers, setDrivers] = useState<any[]>([]);
+  const [activeIncidents, setActiveIncidents] = useState<any[]>([]);
+  
+  // Computed stats
+  const activeVehicles = vehicles.filter(v => v.status !== "Maintenance" && v.status !== "Available").length;
+  const totalVehicles = vehicles.length;
+  const alertCount = activeIncidents.filter(i => i.severity === "Critical" || i.severity === "High").length;
+
+  // Animated delivery counter (demo)
   const [deliveries, setDeliveries] = useState(142);
   const [truckPos, setTruckPos] = useState({ d: 0, b: 0 });
-  const [feedLogs] = useState([
+  const [feedLogs, setFeedLogs] = useState([
     { id: 1, time: "Just now", text: "TRK-001 passed Checkpoint Alpha", type: "info" },
     { id: 2, time: "2m ago", text: "TRK-005 reported unexpected roadblock", type: "warning" },
     { id: 3, time: "5m ago", text: "Dijkstra recalculation complete for TRK-002", type: "success" },
     { id: 4, time: "12m ago", text: "Warehouse B received shipment PKG-882", type: "info" },
   ]);
+
+  // Fetch live stats from API
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [v, i] = await Promise.all([
+          apiRequest<any[]>("/vehicles").catch(() => []),
+          apiRequest<any[]>("/incidents").catch(() => [])
+        ]);
+        setVehicles(v);
+        setActiveIncidents(i);
+        // Update feed with real incident data
+        if (i.length > 0) {
+          const recentIncident = i[0];
+          setFeedLogs(prev => [{
+            id: Date.now(),
+            time: "Just now",
+            text: `Incident reported: ${recentIncident.description?.substring(0, 50)}`,
+            type: recentIncident.severity === "Critical" || recentIncident.severity === "High" ? "warning" : "info"
+          }, ...prev.slice(0, 3)]);
+        }
+      } catch {}
+    };
+    fetchStats();
+    const refreshInterval = setInterval(fetchStats, 30000); // refresh every 30s
+    return () => clearInterval(refreshInterval);
+  }, []);
 
   // Simulate live updates
   useEffect(() => {
@@ -94,13 +132,19 @@ export function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-white tracking-tight">12<span className="text-xl text-zinc-500 font-normal">/15</span></div>
+              <div className="text-4xl font-bold text-white tracking-tight">
+                {totalVehicles > 0 ? activeVehicles : "—"}
+                <span className="text-xl text-zinc-500 font-normal">/{totalVehicles > 0 ? totalVehicles : "—"}</span>
+              </div>
               <div className="flex items-center mt-2 text-xs text-blue-400">
                 <Activity className="w-3 h-3 mr-1" />
                 <span>Real-time tracking active</span>
               </div>
               <div className="mt-4 h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 w-[80%] rounded-full" />
+                <div 
+                  className="h-full bg-blue-500 rounded-full transition-all duration-700" 
+                  style={{ width: totalVehicles > 0 ? `${(activeVehicles / totalVehicles) * 100}%` : "0%" }}
+                />
               </div>
             </CardContent>
           </Card>
@@ -151,7 +195,7 @@ export function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-4xl font-bold text-red-400 tracking-tight">2</div>
+              <div className="text-4xl font-bold text-red-400 tracking-tight">{alertCount}</div>
               <p className="mt-2 text-xs text-red-400/80">Require immediate dispatcher attention</p>
               
               <div className="mt-4 space-y-2">

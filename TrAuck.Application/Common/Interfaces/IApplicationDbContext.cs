@@ -12,6 +12,7 @@ public interface IApplicationDbContext
     DbSet<Vehicle> Vehicles { get; }
     DbSet<Trip> Trips { get; }
     DbSet<LoadPlan> LoadPlans { get; }
+    DbSet<Incident> Incidents { get; }
     DbSet<CargoItem> CargoItems { get; }
     DbSet<DeliveryStop> DeliveryStops { get; }
     DbSet<AccessRequest> AccessRequests { get; }

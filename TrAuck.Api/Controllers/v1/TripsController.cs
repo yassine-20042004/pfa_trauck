@@ -1,42 +1,52 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.Trips.Commands;
+using TrAuckApplication.Features.Trips.Queries;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class TripDto {
-    public string? origin { get; set; }
-    public string? destination { get; set; }
-    public string? driverId { get; set; }
-    public string? vehicleId { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class TripsController : ControllerBase
 {
-    private static readonly List<object> _trips = new List<object>
+    private readonly IMediator _mediator;
+
+    public TripsController(IMediator mediator)
     {
-        new { id = "1", origin = "Casablanca", destination = "Tangier", status = "Ongoing", driverId = "1", vehicleId = "1" },
-        new { id = "2", origin = "Marrakech", destination = "Agadir", status = "Planned", driverId = "2", vehicleId = "2" }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_trips);
+        var trips = await _mediator.Send(new GetTripsQuery(), cancellationToken);
+        return Ok(trips);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] TripDto trip)
+    public async Task<IActionResult> Post([FromBody] CreateTripDto dto, CancellationToken cancellationToken)
     {
-        var tripObj = new { 
-            id = Guid.NewGuid().ToString(),
-            origin = trip.origin,
-            destination = trip.destination,
-            status = "Planned",
-            driverId = trip.driverId,
-            vehicleId = trip.vehicleId
+        // Accept both string and Guid for driverId/vehicleId (frontend sends strings)
+        Guid.TryParse(dto.DriverId, out var driverGuid);
+        Guid.TryParse(dto.VehicleId, out var vehicleGuid);
+
+        var command = new CreateTripCommand
+        {
+            Origin = dto.Origin ?? string.Empty,
+            Destination = dto.Destination ?? string.Empty,
+            DriverId = driverGuid,
+            VehicleId = vehicleGuid
         };
-        _trips.Add(tripObj);
-        return Created("", tripObj);
+
+        var trip = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/trips/{trip.Id}", trip);
     }
+}
+
+public class CreateTripDto
+{
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
+    public string? DriverId { get; set; }
+    public string? VehicleId { get; set; }
 }
