@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuthStore } from "@/stores/authStore";
 
 interface AccessRequestDto {
   id: string;
@@ -24,7 +25,12 @@ export function AccessRequestsPage() {
   const fetchPendingRequests = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('http://localhost:5198/api/v1/AccessRequests/pending');
+      const token = useAuthStore.getState().token;
+      const res = await fetch('http://localhost:5198/api/v1/AccessRequests/pending', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (res.ok) {
         const data = await res.json();
         setRequests(data);
@@ -38,8 +44,12 @@ export function AccessRequestsPage() {
 
   const handleApprove = async (id: string) => {
     try {
+      const token = useAuthStore.getState().token;
       const res = await fetch(`http://localhost:5198/api/v1/AccessRequests/${id}/approve`, {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       if (res.ok) {
         // Remove from list or refetch

@@ -18,6 +18,7 @@ public class AccessRequestsController : ControllerBase
     }
 
     [HttpPost]
+    [Microsoft.AspNetCore.Authorization.AllowAnonymous]
     public async Task<IActionResult> CreateAccessRequest([FromBody] CreateAccessRequestCommand command)
     {
         try

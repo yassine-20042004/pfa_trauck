@@ -1,68 +1,57 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using TrAuckApplication.Common.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace TrAuckApplication.Features.Identity;
 
-public class LoginCommand : IRequest<string>
+public class LoginResponse
+{
+    public string Token { get; set; } = string.Empty;
+    public string Role { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+}
+
+public class LoginCommand : IRequest<LoginResponse>
 {
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
 }
 
-public class LoginCommandHandler : IRequestHandler<LoginCommand, string>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
     private readonly IApplicationDbContext _context;
-    private readonly IConfiguration _configuration;
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-    public LoginCommandHandler(IApplicationDbContext context, IConfiguration configuration)
+    public LoginCommandHandler(IApplicationDbContext context, IPasswordHasher passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
     {
         _context = context;
-        _configuration = configuration;
+        _passwordHasher = passwordHasher;
+        _jwtTokenGenerator = jwtTokenGenerator;
     }
 
-    public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
-
-        if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email && u.IsActive, cancellationToken);
+        if (user == null)
         {
-            throw new UnauthorizedAccessException("Email ou mot de passe incorrect.");
+            throw new Exception("Invalid credentials");
         }
 
-        if (!user.IsActive)
+        if (!_passwordHasher.VerifyPassword(request.Password, user.PasswordHash))
         {
-            throw new UnauthorizedAccessException("Votre compte est inactif.");
+            throw new Exception("Invalid credentials");
         }
 
-        var jwtSettings = _configuration.GetSection("Jwt");
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
+        var token = _jwtTokenGenerator.GenerateToken(user);
 
-        var claims = new[]
+        return new LoginResponse
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim("role", user.Role),
-            new Claim("firstName", user.FirstName),
-            new Claim("lastName", user.LastName)
+            Token = token,
+            Role = user.Role,
+            FirstName = user.FirstName,
+            LastName = user.LastName
         };
-
-        var token = new JwtSecurityToken(
-            issuer: jwtSettings["Issuer"],
-            audience: jwtSettings["Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
-            signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
