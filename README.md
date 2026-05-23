@@ -25,17 +25,15 @@ _(Replace the placeholder image URLs below with actual screenshots of your app b
 
 ### 1. Admin Dashboard
 
-![Admin Dashboard](docs/admin-dashboard.png)
+![Admin Dashboard](docs/dashboard.png)
 
 ### 2. Live Driver Route
 
-![Driver Route](https://via.placeholder.com/800x450/18181b/ffffff?text=Live+Driver+Route+Screenshot)
+![Driver Route](docs/driverroute.png)
 
 ### 3. Registration & Access Requests
 
-![Registration Flow](https://via.placeholder.com/800x450/18181b/ffffff?text=Registration+Flow+Screenshot)
-
----
+![Registration Flow](docs/accessrequest.png)
 
 ## ✨ Key Features
 
