@@ -41,6 +41,36 @@ public class TripsController : ControllerBase
         var trip = await _mediator.Send(command, cancellationToken);
         return Created($"/api/v1/trips/{trip.Id}", trip);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var trip = await _mediator.Send(new GetTripByIdQuery { Id = id }, cancellationToken);
+        if (trip == null)
+            return NotFound();
+        return Ok(trip);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateTripCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var trip = await _mediator.Send(command, cancellationToken);
+        if (trip == null)
+            return NotFound();
+        return Ok(trip);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteTripCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
 }
 
 public class CreateTripDto

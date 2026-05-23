@@ -38,6 +38,36 @@ public class LoadPlansController : ControllerBase
         var loadPlan = await _mediator.Send(command, cancellationToken);
         return Created($"/api/v1/loadplans/{loadPlan.Id}", loadPlan);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var loadPlan = await _mediator.Send(new GetLoadPlanByIdQuery { Id = id }, cancellationToken);
+        if (loadPlan == null)
+            return NotFound();
+        return Ok(loadPlan);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateLoadPlanCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var loadPlan = await _mediator.Send(command, cancellationToken);
+        if (loadPlan == null)
+            return NotFound();
+        return Ok(loadPlan);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteLoadPlanCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
 }
 
 public class CreateLoadPlanDto

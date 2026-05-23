@@ -40,6 +40,36 @@ public class VehiclesController : ControllerBase
         var vehicle = await _mediator.Send(command, cancellationToken);
         return Created($"/api/v1/vehicles/{vehicle.Id}", vehicle);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var vehicle = await _mediator.Send(new GetVehicleByIdQuery { Id = id }, cancellationToken);
+        if (vehicle == null)
+            return NotFound();
+        return Ok(vehicle);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateVehicleCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var vehicle = await _mediator.Send(command, cancellationToken);
+        if (vehicle == null)
+            return NotFound();
+        return Ok(vehicle);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteVehicleCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
 }
 
 // Flexible DTO accepts both camelCase frontend names and domain names

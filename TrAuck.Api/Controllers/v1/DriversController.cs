@@ -37,6 +37,36 @@ public class DriversController : ControllerBase
         var driver = await _mediator.Send(command, cancellationToken);
         return Created($"/api/v1/drivers/{driver.Id}", driver);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var driver = await _mediator.Send(new GetDriverByIdQuery { Id = id }, cancellationToken);
+        if (driver == null)
+            return NotFound();
+        return Ok(driver);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateDriverCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var driver = await _mediator.Send(command, cancellationToken);
+        if (driver == null)
+            return NotFound();
+        return Ok(driver);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteDriverCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
 }
 
 public class CreateDriverDto
