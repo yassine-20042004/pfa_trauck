@@ -21,15 +21,18 @@ TrAuck is a premium, high-performance logistics and fleet management platform. I
 
 ## 📸 Screenshots
 
-*(Replace the placeholder image URLs below with actual screenshots of your app by placing them in a `docs/` or `assets/` folder)*
+_(Replace the placeholder image URLs below with actual screenshots of your app by placing them in a `docs/` or `assets/` folder)_
 
 ### 1. Admin Dashboard
-![Admin Dashboard](https://via.placeholder.com/800x450/18181b/ffffff?text=Admin+Dashboard+Screenshot)
+
+![Admin Dashboard](docs/admin-dashboard.png)
 
 ### 2. Live Driver Route
+
 ![Driver Route](https://via.placeholder.com/800x450/18181b/ffffff?text=Live+Driver+Route+Screenshot)
 
 ### 3. Registration & Access Requests
+
 ![Registration Flow](https://via.placeholder.com/800x450/18181b/ffffff?text=Registration+Flow+Screenshot)
 
 ---
@@ -49,6 +52,7 @@ TrAuck is a premium, high-performance logistics and fleet management platform. I
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **React 18** (Vite)
 - **TypeScript**
 - **Tailwind CSS** (Custom Dark Theme, Glassmorphism, Animations)
@@ -58,6 +62,7 @@ TrAuck is a premium, high-performance logistics and fleet management platform. I
 - **shadcn/ui** (Component primitives)
 
 ### Backend
+
 - **.NET 8 Web API**
 - **C# 12**
 - **Entity Framework Core 8** (Code-First Migrations)
@@ -70,17 +75,20 @@ TrAuck is a premium, high-performance logistics and fleet management platform. I
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18+)
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - A [Supabase](https://supabase.com/) account and project (for PostgreSQL).
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/TrAuck.git
 cd TrAuck
 ```
 
 ### 2. Backend Setup
+
 1. Navigate to the API folder:
    ```bash
    cd TrAuck.Api
@@ -97,7 +105,7 @@ cd TrAuck
    ```bash
    dotnet ef database update --project ../TrAuck.Infrastructure --startup-project .
    ```
-   *(Note: This automatically seeds a default admin user: `admin@admin.com` / `admin123`)*
+   _(Note: This automatically seeds a default admin user: `admin@admin.com` / `admin123`)_
 4. Run the API:
    ```bash
    dotnet run
@@ -105,6 +113,7 @@ cd TrAuck
    The API will be available at `http://localhost:5198`.
 
 ### 3. Frontend Setup
+
 1. Open a new terminal and navigate to the frontend folder:
    ```bash
    cd pfa_trauck/TrAuck.Frontend
@@ -153,6 +162,7 @@ TrAuck/
 ---
 
 ## 📄 License
+
 This project is proprietary and built for logistics management.
 
 <div align="center">
