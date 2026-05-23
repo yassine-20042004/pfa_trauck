@@ -14,6 +14,11 @@ public class UpdateTripCommand : IRequest<Trip?>
     public Guid DriverId { get; set; }
     public Guid VehicleId { get; set; }
     public DateTime? DepartedAt { get; set; }
+    public double Distance { get; set; }
+    public double Duration { get; set; }
+    public string Winner { get; set; } = string.Empty;
+    public string ZonesJson { get; set; } = "[]";
+    public string CustomCoordsJson { get; set; } = "{}";
 }
 
 public class UpdateTripCommandHandler : IRequestHandler<UpdateTripCommand, Trip?>
@@ -39,6 +44,11 @@ public class UpdateTripCommandHandler : IRequestHandler<UpdateTripCommand, Trip?
         trip.DriverId = request.DriverId;
         trip.VehicleId = request.VehicleId;
         trip.DepartedAt = request.DepartedAt;
+        trip.Distance = request.Distance;
+        trip.Duration = request.Duration;
+        trip.Winner = request.Winner;
+        trip.ZonesJson = request.ZonesJson;
+        trip.CustomCoordsJson = request.CustomCoordsJson;
 
         await _context.SaveChangesAsync(cancellationToken);
 

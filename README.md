@@ -38,7 +38,7 @@ TrAuck is a premium, high-performance logistics and fleet management platform. I
 
 - **🛡️ Secure Access Flow**: Users (Drivers & Dispatchers) request access via a dynamic registration portal. Admins approve requests and manage users.
 - **🚚 Fleet & Vehicle Management**: Full tracking of trucks, vans, flatbeds, and refrigerated vehicles.
-- **📍 Live Route Tracking**: Dedicated Driver UI for viewing assigned trips and live navigation updates.
+- **📍 Live Route Tracking & Dispatching**: Dynamic map UI for visualizing Dijkstra/Bellman-Ford routing algorithms, synced directly to the .NET backend API.
 - **📦 Load Planning**: Advanced cargo item tracking and delivery stop management.
 - **⚙️ Clean Architecture**: The .NET backend is strictly divided into `Domain`, `Application`, `Infrastructure`, and `Api` layers.
 - **⚡ CQRS Pattern**: Utilizes MediatR for clean, separated Commands and Queries.

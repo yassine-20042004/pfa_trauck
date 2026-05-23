@@ -10,5 +10,11 @@ public class Trip
     public Guid VehicleId { get; set; }
     public DateTime? DepartedAt { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    
+    // Routing specific fields
+    public double Distance { get; set; }
+    public double Duration { get; set; }
+    public string Winner { get; set; } = string.Empty;
+    public string ZonesJson { get; set; } = "[]";
+    public string CustomCoordsJson { get; set; } = "{}";
 }
-

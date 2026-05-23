@@ -35,7 +35,12 @@ public class TripsController : ControllerBase
             Origin = dto.Origin ?? string.Empty,
             Destination = dto.Destination ?? string.Empty,
             DriverId = driverGuid,
-            VehicleId = vehicleGuid
+            VehicleId = vehicleGuid,
+            Distance = dto.Distance,
+            Duration = dto.Duration,
+            Winner = dto.Winner ?? string.Empty,
+            ZonesJson = dto.ZonesJson ?? "[]",
+            CustomCoordsJson = dto.CustomCoordsJson ?? "{}"
         };
 
         var trip = await _mediator.Send(command, cancellationToken);
@@ -79,4 +84,9 @@ public class CreateTripDto
     public string? Destination { get; set; }
     public string? DriverId { get; set; }
     public string? VehicleId { get; set; }
+    public double Distance { get; set; }
+    public double Duration { get; set; }
+    public string? Winner { get; set; }
+    public string? ZonesJson { get; set; }
+    public string? CustomCoordsJson { get; set; }
 }

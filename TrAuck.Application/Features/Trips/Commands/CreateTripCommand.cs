@@ -10,6 +10,11 @@ public class CreateTripCommand : IRequest<Trip>
     public string Destination { get; set; } = string.Empty;
     public Guid DriverId { get; set; }
     public Guid VehicleId { get; set; }
+    public double Distance { get; set; }
+    public double Duration { get; set; }
+    public string Winner { get; set; } = string.Empty;
+    public string ZonesJson { get; set; } = "[]";
+    public string CustomCoordsJson { get; set; } = "{}";
 }
 
 public class CreateTripCommandHandler : IRequestHandler<CreateTripCommand, Trip>
@@ -31,6 +36,11 @@ public class CreateTripCommandHandler : IRequestHandler<CreateTripCommand, Trip>
             DriverId = request.DriverId,
             VehicleId = request.VehicleId,
             Status = "Planned",
+            Distance = request.Distance,
+            Duration = request.Duration,
+            Winner = request.Winner,
+            ZonesJson = request.ZonesJson,
+            CustomCoordsJson = request.CustomCoordsJson,
             DepartedAt = null,
             CreatedAt = DateTime.UtcNow
         };
