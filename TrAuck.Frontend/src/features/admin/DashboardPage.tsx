@@ -2,23 +2,57 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Truck, AlertCircle, Package, Activity, MapPin, Clock, TrendingUp, Users } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { apiRequest } from "@/lib/api";
 
-// Real Casablanca routes (lat/lng)
-const DIJKSTRA_ROUTE: [number, number][] = [
-  [33.5731, -7.5898], [33.5760, -7.5950], [33.5790, -7.5990],
-  [33.5830, -7.6040], [33.5870, -7.6080], [33.5920, -7.6130],
-  [33.5960, -7.6170], [33.5990, -7.6210],
+const MOROCCAN_CITIES = [
+  { name: 'Casablanca', lat: 33.5731, lon: -7.5898 },
+  { name: 'Rabat', lat: 34.0209, lon: -6.8416 },
+  { name: 'Tanger', lat: 35.7595, lon: -5.8340 },
+  { name: 'Marrakech', lat: 31.6295, lon: -7.9811 },
+  { name: 'Agadir', lat: 30.4278, lon: -9.5981 },
+  { name: 'Fès', lat: 34.0331, lon: -5.0003 },
+  { name: 'Meknès', lat: 33.8926, lon: -5.5511 },
+  { name: 'Oujda', lat: 34.6814, lon: -1.9086 },
+  { name: 'Nador', lat: 35.1667, lon: -2.9333 },
+  { name: 'Laâyoune', lat: 27.1500, lon: -13.2000 },
+  { name: 'Dakhla', lat: 23.6848, lon: -15.9580 },
+  { name: 'Kenitra', lat: 34.2610, lon: -6.5802 },
+  { name: 'Tetouan', lat: 35.5785, lon: -5.3684 },
+  { name: 'Safi', lat: 32.2994, lon: -9.2372 },
+  { name: 'El Jadida', lat: 33.2311, lon: -8.5007 },
+  { name: 'Beni Mellal', lat: 32.3394, lon: -6.3608 },
+  { name: 'Errachidia', lat: 31.9314, lon: -4.4244 },
+  { name: 'Ouarzazate', lat: 30.9189, lon: -6.8934 },
+  { name: 'Al Hoceima', lat: 35.2442, lon: -3.9366 },
+  { name: 'Chefchaouen', lat: 35.1714, lon: -5.2697 },
 ];
-const BELLMAN_ROUTE: [number, number][] = [
-  [33.5530, -7.5898], [33.5560, -7.5840], [33.5600, -7.5770],
-  [33.5650, -7.5720], [33.5700, -7.5690],
-];
-const DESTINATION_PINS: { pos: [number, number]; label: string }[] = [
-  { pos: [33.5990, -7.6210], label: "Warehouse B" },
-  { pos: [33.5700, -7.5690], label: "Client X" },
-];
+
+const getTripCoords = (cityName: string, customCoords: any, type: string, zoneId?: string): [number, number] => {
+  if (type === 'origin' && customCoords?.origin) return [customCoords.origin.lat, customCoords.origin.lon];
+  if (type === 'destination' && customCoords?.destination) return [customCoords.destination.lat, customCoords.destination.lon];
+  if (type === 'zone' && zoneId && customCoords?.zones?.[zoneId]) return [customCoords.zones[zoneId].lat, customCoords.zones[zoneId].lon];
+  
+  const city = MOROCCAN_CITIES.find(c => c.name.toLowerCase() === (cityName || '').toLowerCase());
+  if (city) return [city.lat, city.lon];
+  return [33.5731, -7.5898]; // fallback Casablanca
+};
+
+const buildRouteArray = (trip: any): [number, number][] => {
+  const route: [number, number][] = [];
+  const customCoords = trip.customCoordsJson ? JSON.parse(trip.customCoordsJson) : {};
+  
+  route.push(getTripCoords(trip.origin, customCoords, 'origin'));
+  
+  const zones = trip.zonesJson ? JSON.parse(trip.zonesJson) : [];
+  zones.forEach((z: any) => {
+      route.push(getTripCoords(z.city, customCoords, 'zone', z.id));
+  });
+  
+  route.push(getTripCoords(trip.destination, customCoords, 'destination'));
+  
+  return route;
+};
 
 const container: Variants = {
   hidden: { opacity: 0 },
@@ -26,6 +60,38 @@ const container: Variants = {
     opacity: 1,
     transition: { staggerChildren: 0.1 }
   }
+};
+
+// Simple route builder (straight line) – used as fallback
+const buildSimpleRouteArray = (trip: any): [number, number][] => {
+  const route: [number, number][] = [];
+  const customCoords = trip.customCoordsJson ? JSON.parse(trip.customCoordsJson) : {};
+  route.push(getTripCoords(trip.origin, customCoords, 'origin'));
+  const zones = trip.zonesJson ? JSON.parse(trip.zonesJson) : [];
+  zones.forEach((z: any) => {
+    route.push(getTripCoords(z.city, customCoords, 'zone', z.id));
+  });
+  route.push(getTripCoords(trip.destination, customCoords, 'destination'));
+  return route;
+};
+
+// Fetch real road route from OSRM (public server)
+const fetchRoadRoute = async (points: [number, number][]): Promise<[number, number][]> => {
+  if (points.length < 2) return points;
+  // OSRM expects lon,lat order
+  const coords = points.map(p => `${p[1]},${p[0]}`).join(';');
+  const url = `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data?.routes?.[0]?.geometry?.coordinates) {
+      // Convert back to [lat, lon]
+      return data.routes[0].geometry.coordinates.map((c: any) => [c[1], c[0]]);
+    }
+  } catch (e) {
+    console.error('OSRM routing error', e);
+  }
+  return points; // fallback to straight line
 };
 
 const item: Variants = {
@@ -38,6 +104,9 @@ export function DashboardPage() {
   const [vehicles, setVehicles] = useState<any[]>([]);
   const [drivers, setDrivers] = useState<any[]>([]);
   const [activeIncidents, setActiveIncidents] = useState<any[]>([]);
+  const [trips, setTrips] = useState<any[]>([]);
+  // Store computed road routes per trip id
+  const [routesMap, setRoutesMap] = useState<Record<string, [number, number][]>>({});
   
   // Computed stats
   const activeVehicles = vehicles.filter(v => v.status !== "Maintenance" && v.status !== "Available").length;
@@ -46,7 +115,7 @@ export function DashboardPage() {
 
   // Animated delivery counter (demo)
   const [deliveries, setDeliveries] = useState(142);
-  const [truckPos, setTruckPos] = useState({ d: 0, b: 0 });
+  const [globalT, setGlobalT] = useState(0);
   const [feedLogs, setFeedLogs] = useState([
     { id: 1, time: "Just now", text: "TRK-001 passed Checkpoint Alpha", type: "info" },
     { id: 2, time: "2m ago", text: "TRK-005 reported unexpected roadblock", type: "warning" },
@@ -58,12 +127,25 @@ export function DashboardPage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [v, i] = await Promise.all([
+        const [v, i, t] = await Promise.all([
           apiRequest<any[]>("/vehicles").catch(() => []),
-          apiRequest<any[]>("/incidents").catch(() => [])
+          apiRequest<any[]>("/incidents").catch(() => []),
+          apiRequest<any[]>("/trips").catch(() => [])
         ]);
         setVehicles(v);
         setActiveIncidents(i);
+        setTrips(t);
+        // After trips are set, compute road routes
+        const computeRoutes = async () => {
+          const newMap: Record<string, [number, number][]> = {};
+          await Promise.all(t.map(async (trip: any) => {
+            const simple = buildSimpleRouteArray(trip);
+            const road = await fetchRoadRoute(simple);
+            newMap[trip.id] = road;
+          }));
+          setRoutesMap(newMap);
+        };
+        computeRoutes();
         // Update feed with real incident data
         if (i.length > 0) {
           const recentIncident = i[0];
@@ -90,10 +172,7 @@ export function DashboardPage() {
 
     // Map truck animation
     const mapInterval = setInterval(() => {
-      setTruckPos((p) => ({
-        d: (p.d + 0.003) % 1,
-        b: (p.b + 0.005) % 1,
-      }));
+      setGlobalT((p) => (p + 0.002) % 1);
     }, 50);
 
     return () => {
@@ -103,6 +182,8 @@ export function DashboardPage() {
   }, []);
 
   const lerp = (route: [number, number][], t: number): [number, number] => {
+    if (!route || route.length === 0) return [0,0];
+    if (route.length === 1) return route[0];
     const idx = t * (route.length - 1);
     const i = Math.floor(idx);
     const f = idx - i;
@@ -110,8 +191,6 @@ export function DashboardPage() {
     const b = route[Math.min(i + 1, route.length - 1)];
     return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
   };
-  const dijkstraTruck = lerp(DIJKSTRA_ROUTE, truckPos.d);
-  const bellmanTruck = lerp(BELLMAN_ROUTE, truckPos.b);
 
   return (
     <motion.div 
@@ -228,35 +307,51 @@ export function DashboardPage() {
               </div>
             </CardHeader>
             <CardContent className="flex-1 p-0 relative z-0">
-              <MapContainer 
-                center={[33.5731, -7.5898]} // Casablanca
-                zoom={13} 
-                scrollWheelZoom={true}
-                style={{ height: '100%', width: '100%', background: '#09090b' }}
-                zoomControl={false}
-              >
+                <MapContainer 
+                  center={[31, -6]} // Wider view including sea
+                  zoom={4} 
+                  scrollWheelZoom={true}
+                  style={{ height: '100%', width: '100%', background: '#09090b' }}
+                  zoomControl={false}
+                >
                 <TileLayer
                   url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                 />
-                
-                {/* Routes */}
-                <Polyline positions={DIJKSTRA_ROUTE} color="#3b82f6" weight={3} opacity={0.6} />
-                <Polyline positions={BELLMAN_ROUTE} color="#ef4444" weight={3} opacity={0.8} dashArray="10 6" />
-                
-                {/* Animated trucks */}
-                <CircleMarker center={dijkstraTruck} radius={6} pathOptions={{ color: '#fff', weight: 2, fillColor: '#3b82f6', fillOpacity: 1 }}>
-                  <Popup className="dark-popup"><span className="text-xs"><strong>TRK-001</strong><br/>On Route · Dijkstra</span></Popup>
-                </CircleMarker>
-                <CircleMarker center={bellmanTruck} radius={7} pathOptions={{ color: '#fff', weight: 2, fillColor: '#ef4444', fillOpacity: 1 }}>
-                  <Popup className="dark-popup"><span className="text-xs text-red-500"><strong>TRK-005 (SOS)</strong><br/>Emergency Reroute</span></Popup>
-                </CircleMarker>
-                
-                {/* Destination pins */}
-                {DESTINATION_PINS.map((pin) => (
-                  <CircleMarker key={pin.label} center={pin.pos} radius={5} pathOptions={{ color: '#10b981', weight: 2, fillColor: '#fff', fillOpacity: 1 }}>
-                    <Popup className="dark-popup"><span className="text-xs text-emerald-500 font-bold">{pin.label}</span></Popup>
-                  </CircleMarker>
-                ))}
+                         {/* Dynamic Routes & Trucks */}
+                {trips.slice(0, 5).map((trip, idx) => {
+  const baseRoute = routesMap[trip.id] || [];
+  if (baseRoute.length === 0) return null;
+  // Add a point out to sea (westward) for demonstration
+  const seaPoint: [number, number] = [baseRoute[baseRoute.length - 1][0], baseRoute[baseRoute.length - 1][1] - 1];
+  const route = [...baseRoute, seaPoint];
+
+  const isBellman = trip.winner === 'Bellman-Ford';
+  const color = isBellman ? '#ef4444' : '#3b82f6';
+  // Add slight offset so they don't all overlap if they start at same time
+  const t = (globalT + (idx * 0.13)) % 1;
+  const truckPos = lerp(route, t);
+
+  return (
+    <React.Fragment key={trip.id}>
+      <Polyline positions={route} color={color} weight={3} opacity={0.6} dashArray={isBellman ? "10 6" : undefined} />
+      <CircleMarker center={truckPos} radius={6} pathOptions={{ color: '#fff', weight: 2, fillColor: color, fillOpacity: 1 }}>
+        <Popup className="dark-popup">
+          <span className="text-xs">
+            <strong className={isBellman ? "text-red-500" : ""}>TRK-{trip.vehicleId?.substring(0,4) || 'XXX'}</strong>
+            <br/>Route: {trip.origin} ➔ {trip.destination}
+            <br/>{trip.winner}
+          </span>
+        </Popup>
+      </CircleMarker>
+      {/* Origin marker */}
+      <CircleMarker center={route[0]} radius={4} pathOptions={{ color: '#22d3ee', weight: 2, fillColor: '#161b22', fillOpacity: 1 }} />
+      {/* Destination marker (original destination) */}
+      <CircleMarker center={baseRoute[baseRoute.length - 1]} radius={4} pathOptions={{ color: '#22c55e', weight: 2, fillColor: '#161b22', fillOpacity: 1 }} />
+      {/* Sea marker */}
+      <CircleMarker center={seaPoint} radius={4} pathOptions={{ color: '#00ffff', weight: 2, fillColor: '#00ffff', fillOpacity: 1 }} />
+    </React.Fragment>
+  );
+})}
               </MapContainer>
 
               {/* Legend overlay */}
@@ -284,17 +379,53 @@ export function DashboardPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex-1 overflow-auto p-4 space-y-4">
-              {feedLogs.map((log) => (
-                <div key={log.id} className="relative pl-4 border-l border-white/10 group">
-                  <div className={`absolute -left-1 top-1 w-2 h-2 rounded-full ${
-                    log.type === 'warning' ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' : 
-                    log.type === 'success' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 
-                    'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]'
-                  }`} />
-                  <div className="text-[10px] text-zinc-500 font-mono mb-1">{log.time}</div>
-                  <p className="text-sm text-zinc-300 leading-tight group-hover:text-white transition-colors">{log.text}</p>
-                </div>
-              ))}
+              {trips.slice(0, 5).map((trip, idx) => {
+                const zones = trip.zonesJson ? JSON.parse(trip.zonesJson) : [];
+                const routeCities = [trip.origin, ...zones.map((z: any) => z.city), trip.destination];
+                const N = routeCities.length;
+                const isBellman = trip.winner === 'Bellman-Ford';
+                
+                // Calculate dynamic progress
+                const t = (globalT + (idx * 0.13)) % 1;
+                let text = "";
+                let cityDisplay = "";
+                
+                if (N > 1) {
+                  const segmentProgress = t * (N - 1);
+                  const currentIdx = Math.floor(segmentProgress);
+                  const city = routeCities[currentIdx];
+                  
+                  if (currentIdx === 0) {
+                    text = `Départ imminent`;
+                    cityDisplay = city;
+                  } else if (currentIdx === N - 1) {
+                    text = `Arrivé à destination`;
+                    cityDisplay = city;
+                  } else {
+                    text = `Étape actuelle`;
+                    cityDisplay = city;
+                  }
+                } else {
+                  text = `Localisation`;
+                  cityDisplay = routeCities[0];
+                }
+
+                return (
+                  <div key={trip.id} className="relative pl-4 border-l border-white/10 group">
+                    <div className={`absolute -left-1 top-1 w-2 h-2 rounded-full ${
+                      isBellman ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]' : 
+                      'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]'
+                    }`} />
+                    <div className="text-[10px] text-zinc-500 font-mono mb-1">
+                      TRK-{trip.vehicleId?.substring(0,4) || 'XXX'} • Live
+                    </div>
+                    <div className="flex flex-col gap-0.5 group-hover:text-white transition-colors">
+                      <span className="text-xs text-zinc-400">{text}</span>
+                      <span className="text-sm font-bold text-white">{cityDisplay}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </CardContent>
           </Card>
         </motion.div>

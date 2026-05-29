@@ -1,10 +1,10 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { LayoutDashboard, Truck, PackageSearch, Bell, Settings, Clock, Users, Route as RouteIcon, AlertTriangle, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useAuth } from "../auth/AuthContext";
+import { useAuthStore } from "@/stores/authStore";
 
 const navItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -80,10 +80,17 @@ export function AdminLayout() {
   const [time, setTime] = useState(new Date());
   const [showNotifications, setShowNotifications] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { logout, user } = useAuth();
+  const logout = useAuthStore(state => state.logout);
+  const firstName = useAuthStore(state => state.firstName);
+  const lastName = useAuthStore(state => state.lastName);
+  const role = useAuthStore(state => state.role);
+  const user = { firstName, lastName, role };
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+    navigate('/login');
   };
 
   useEffect(() => {

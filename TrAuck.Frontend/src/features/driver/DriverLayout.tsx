@@ -1,15 +1,22 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { ListTodo, AlertTriangle, User, Navigation2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAuth } from "../auth/AuthContext";
+import { useAuthStore } from "@/stores/authStore";
 
 export function DriverLayout() {
   const location = useLocation();
-  const { logout, user } = useAuth();
+  const logout = useAuthStore(state => state.logout);
+  const firstName = useAuthStore(state => state.firstName);
+  const lastName = useAuthStore(state => state.lastName);
+  const role = useAuthStore(state => state.role);
+  const user = { firstName, lastName, role };
+
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
+    navigate('/login');
   };
 
   const navItems = [
