@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, AnimatePresence } from "framer-motion";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
 import { Truck, CheckCircle2, AlertTriangle, Zap, MapPin, ShieldAlert, PackageSearch, Globe, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 declare global {
   interface Window {
@@ -18,6 +18,7 @@ declare global {
 // and layered parallax for depth illusion.
 
 export default function LandingPage() {
+  const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroRef = useRef<HTMLElement>(null);
 
@@ -218,7 +219,7 @@ export default function LandingPage() {
           <div style={styles.navLinks}>
             <a href="#features" style={styles.navLink}>Features</a>
             <a href="#algorithms" style={styles.navLink}>Technology</a>
-            <a href="#cta" style={styles.navLinkActive}>Get Started →</a>
+            <a href="login" style={styles.navLinkActive}>Get Started →</a>
           </div>
         </div>
       </nav>
@@ -250,10 +251,10 @@ export default function LandingPage() {
           </p>
 
           <div className="hero-ctas flex flex-wrap gap-4 justify-center lg:justify-start">
-            <button className="px-7 py-3.5 rounded-2xl bg-white text-black text-sm font-bold shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:scale-105 transition-transform">
+            <button className="px-7 py-3.5 rounded-2xl bg-white text-black text-sm font-bold shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:scale-105 transition-transform" onClick={() => navigate('/login')}>
               Access Dashboard →
             </button>
-            <button className="px-7 py-3.5 rounded-2xl bg-transparent text-white text-sm font-semibold border border-white/10 hover:border-white/30 backdrop-blur-md transition-colors">
+            <button className="px-7 py-3.5 rounded-2xl bg-transparent text-white text-sm font-semibold border border-white/10 hover:border-white/30 backdrop-blur-md transition-colors" onClick={() => navigate('/register')}>
               Driver App Demo ↗
             </button>
           </div>

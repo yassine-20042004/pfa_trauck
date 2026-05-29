@@ -14,14 +14,9 @@ interface Incident {
 
 interface Trip { id: string; origin: string; destination: string; }
 
-const MOCK_INCIDENTS: Incident[] = [
-  { id: "1", tripId: "1", description: "Heavy traffic at Checkpoint A", reportedAt: new Date().toISOString(), severity: "Low" },
-  { id: "2", tripId: "2", description: "Engine overheat detected", reportedAt: new Date().toISOString(), severity: "High" },
-  { id: "3", tripId: "3", description: "Tire blowout on highway", reportedAt: new Date().toISOString(), severity: "Critical" },
-];
 
 export function IncidentsPage() {
-  const [incidents, setIncidents] = useState<Incident[]>(MOCK_INCIDENTS);
+  const [incidents, setIncidents] = useState<Incident[]>([]);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBackendOffline, setIsBackendOffline] = useState(false);
@@ -40,12 +35,11 @@ export function IncidentsPage() {
         apiRequest<Incident[]>("/incidents"),
         apiRequest<Trip[]>("/trips").catch(() => [])
       ]);
-      setIncidents(incidentsData.length ? incidentsData : MOCK_INCIDENTS);
+      setIncidents(incidentsData);
       setTrips(tripsData);
       setIsBackendOffline(false);
     } catch (error) {
       setIsBackendOffline(true);
-      setIncidents(MOCK_INCIDENTS);
     } finally {
       setTimeout(() => setIsSyncing(false), 600);
     }
@@ -58,17 +52,8 @@ export function IncidentsPage() {
   const handleReportIncident = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (isBackendOffline) {
-        const newIncident = { 
-          ...formData, 
-          id: Math.random().toString(), 
-          reportedAt: new Date().toISOString() 
-        };
-        setIncidents([newIncident, ...incidents]);
-      } else {
-        await apiRequest("/incidents", "POST", formData);
-        await fetchData();
-      }
+      await apiRequest("/incidents", "POST", formData);
+      await fetchData();
       setFormData({ tripId: "", description: "", severity: "Low" });
     } catch (error) {
       console.error("Failed to report incident", error);
@@ -81,7 +66,7 @@ export function IncidentsPage() {
   );
 
   const criticalCount = incidents.filter(i => i.severity === 'Critical' || i.severity === 'High').length;
-  const resolvedCount = incidents.length > 0 ? Math.floor(incidents.length / 2) : 0; // Mock stat
+  const resolvedCount = 0; // Will be implemented when Incident gains a 'ResolvedAt' field
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">

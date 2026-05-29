@@ -14,14 +14,9 @@ interface Driver {
   rating?: number;
 }
 
-const MOCK_DRIVERS: Driver[] = [
-  { id: "1", firstName: "Yassine", lastName: "J.", licenseNumber: "LIC-123456", isAvailable: true, phone: "+212 600 112233", rating: 4.8 },
-  { id: "2", firstName: "Amine", lastName: "M.", licenseNumber: "LIC-789012", isAvailable: false, phone: "+212 600 445566", rating: 4.5 },
-  { id: "3", firstName: "Karim", lastName: "S.", licenseNumber: "LIC-345678", isAvailable: true, phone: "+212 600 778899", rating: 4.9 },
-];
 
 export function DriversPage() {
-  const [drivers, setDrivers] = useState<Driver[]>(MOCK_DRIVERS);
+  const [drivers, setDrivers] = useState<Driver[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBackendOffline, setIsBackendOffline] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -40,8 +35,7 @@ export function DriversPage() {
       setDrivers(data.map(d => ({ ...d, rating: d.rating || (4 + Math.random()), phone: d.phone || "+212 600 000000" })));
       setIsBackendOffline(false);
     } catch (error) {
-      console.warn("Backend offline, using mock data");
-      setDrivers(MOCK_DRIVERS);
+      console.warn("Backend offline");
       setIsBackendOffline(true);
     } finally {
       setTimeout(() => setIsSyncing(false), 600);
@@ -55,13 +49,8 @@ export function DriversPage() {
   const handleAddDriver = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (isBackendOffline) {
-        const newDriver = { ...formData, id: Math.random().toString(), isAvailable: true, rating: 5.0 };
-        setDrivers([newDriver, ...drivers]);
-      } else {
-        await apiRequest("/drivers", "POST", formData);
-        await fetchDrivers();
-      }
+      await apiRequest("/drivers", "POST", formData);
+      await fetchDrivers();
       setFormData({ firstName: "", lastName: "", licenseNumber: "", phone: "" });
     } catch (error) {
       console.error("Failed to add driver", error);

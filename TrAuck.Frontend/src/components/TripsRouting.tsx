@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
+import { apiRequest } from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   MapPin, 
@@ -44,9 +45,6 @@ const MOROCCAN_CITIES = [
   { name: 'Al Hoceima', lat: 35.2442, lon: -3.9366 },
   { name: 'Chefchaouen', lat: 35.1714, lon: -5.2697 },
 ];
-
-const VEHICLES = ['TRK-001', 'TRK-002', 'TRK-003', 'TRK-004', 'TRK-005'];
-const DRIVERS = ['Driver 1', 'Driver 2', 'Driver 3', 'Driver 4', 'Driver 5'];
 
 // --- ALGORITHMS ---
 function haversineDistance(lat1, lon1, lat2, lon2) {
@@ -601,14 +599,56 @@ export default function TripsRouting() {
   const [zones, setZones] = useState([]);
   const [formCustomCoords, setFormCustomCoords] = useState({});
   
-  const [mainVehicle, setMainVehicle] = useState('TRK-001');
-  const [mainDriver, setMainDriver] = useState('Driver 1');
+  const [apiVehicles, setApiVehicles] = useState<any[]>([]);
+  const [apiDrivers, setApiDrivers] = useState<any[]>([]);
+  const [mainVehicle, setMainVehicle] = useState('');
+  const [mainDriver, setMainDriver] = useState('');
   
-  const [trips, setTrips] = useState([]);
+  const [trips, setTrips] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isBackendOffline, setIsBackendOffline] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   
   const [activeMapTrip, setActiveMapTrip] = useState(null);
   const [activePicker, setActivePicker] = useState(null);
+
+  const fetchData = async () => {
+    setIsSyncing(true);
+    try {
+      const [tripsData, vehiclesData, driversData] = await Promise.all([
+        apiRequest<any[]>("/trips"),
+        apiRequest<any[]>("/vehicles").catch(() => []),
+        apiRequest<any[]>("/drivers").catch(() => [])
+      ]);
+      
+      const hydratedTrips = tripsData.map(t => {
+        try {
+          return {
+            ...t,
+            zones: JSON.parse(t.zonesJson || "[]"),
+            customCoords: JSON.parse(t.customCoordsJson || "{}")
+          };
+        } catch {
+          return { ...t, zones: [], customCoords: {} };
+        }
+      });
+      
+      setTrips(hydratedTrips.sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+      setApiVehicles(vehiclesData);
+      setApiDrivers(driversData);
+      if (vehiclesData.length > 0) setMainVehicle(vehiclesData[0].id);
+      if (driversData.length > 0) setMainDriver(driversData[0].id);
+      setIsBackendOffline(false);
+    } catch (error) {
+      setIsBackendOffline(true);
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSwap = () => {
     // Snapshot values before any state update
@@ -727,44 +767,50 @@ export default function TripsRouting() {
   };
 
   // Form Submission
-  const handleDispatch = (e) => {
+  const handleDispatch = async (e) => {
     e.preventDefault();
     if (!origin || !destination) return alert("Origin and Destination are required!");
     if (origin.toLowerCase() === destination.toLowerCase()) return alert("Origin and Destination must be different!");
+    if (!mainDriver || !mainVehicle) return alert("Driver and Vehicle are required!");
     
     // Calculate Paths
     const algoRes = calculateAlgorithms(origin, destination, zones, graph, citiesList);
     setGraph(algoRes.graph); // Update graph with new dynamic nodes if any
     
-    const newTrip = {
-      id: `TRP-${Math.floor(Math.random() * 10000)}`,
-      origin,
-      destination,
-      zones: [...zones],
-      vehicle: mainVehicle,
-      driver: mainDriver,
-      status: 'IN TRANSIT',
-      distance: algoRes.distance,
-      duration: algoRes.duration,
-      winner: algoRes.winner,
-      customCoords: {
-        origin: formCustomCoords['origin'] || null,
-        destination: formCustomCoords['destination'] || null,
-        zones: zones.reduce((acc, z, idx) => {
-          if (formCustomCoords[`zone-${idx}`]) acc[z.id] = formCustomCoords[`zone-${idx}`];
-          return acc;
-        }, {})
-      },
-      createdAt: new Date()
+    const customCoords = {
+      origin: formCustomCoords['origin'] || null,
+      destination: formCustomCoords['destination'] || null,
+      zones: zones.reduce((acc, z, idx) => {
+        if (formCustomCoords[`zone-${idx}`]) acc[z.id] = formCustomCoords[`zone-${idx}`];
+        return acc;
+      }, {})
     };
 
-    setTrips([newTrip, ...trips]);
-    
-    // Reset Form
-    setOrigin('');
-    setDestination('');
-    setNumZones(0);
-    setFormCustomCoords({});
+    try {
+      const newTripData = {
+        origin,
+        destination,
+        driverId: mainDriver,
+        vehicleId: mainVehicle,
+        distance: algoRes.distance,
+        duration: algoRes.duration,
+        winner: algoRes.winner,
+        zonesJson: JSON.stringify(zones),
+        customCoordsJson: JSON.stringify(customCoords)
+      };
+
+      await apiRequest("/trips", "POST", newTripData);
+      await fetchData();
+      
+      // Reset Form
+      setOrigin('');
+      setDestination('');
+      setNumZones(0);
+      setFormCustomCoords({});
+    } catch (error) {
+      console.error("Failed to dispatch trip", error);
+      alert("Failed to dispatch trip. Backend might be offline.");
+    }
   };
 
   // Map Drag Update Callback
@@ -803,6 +849,21 @@ export default function TripsRouting() {
         updatedTrip.distance = algoRes.distance;
         updatedTrip.duration = algoRes.duration;
         updatedTrip.winner = algoRes.winner;
+
+        // Sync with API in background
+        apiRequest(`/trips/${tripId}`, "PUT", {
+          id: updatedTrip.id,
+          origin: updatedTrip.origin,
+          destination: updatedTrip.destination,
+          driverId: updatedTrip.driverId,
+          vehicleId: updatedTrip.vehicleId,
+          status: updatedTrip.status,
+          distance: updatedTrip.distance,
+          duration: updatedTrip.duration,
+          winner: updatedTrip.winner,
+          zonesJson: JSON.stringify(updatedTrip.zones),
+          customCoordsJson: JSON.stringify(updatedTrip.customCoords)
+        }).catch(err => console.error("Failed to sync drag update", err));
 
         // Also update activeMapTrip so modal re-renders stats if needed
         if (activeMapTrip?.id === tripId) setActiveMapTrip(updatedTrip);
@@ -917,7 +978,7 @@ export default function TripsRouting() {
                       <div className="grid grid-cols-3 gap-1 pt-2 border-t border-[#30363d]/50 text-[11px] text-[#8b949e]">
                         <div className="flex items-center gap-1"><Activity className="w-3 h-3 text-[#22d3ee]" /><span className="font-semibold text-[#e6edf3]">{(trip.distance||0).toFixed(0)}</span>km</div>
                         <div className="flex items-center gap-1"><Clock className="w-3 h-3 text-[#22c55e]" /><span className="font-semibold text-[#e6edf3]">{Math.round((trip.duration||0)/60)}h{Math.round((trip.duration||0)%60)}m</span></div>
-                        <div className="flex items-center gap-1 justify-end"><User className="w-3 h-3 text-[#f59e0b]" /><span className="font-semibold text-[#e6edf3] truncate">{trip.driver.split(' ').pop()}</span></div>
+                        <div className="flex items-center gap-1 justify-end"><User className="w-3 h-3 text-[#f59e0b]" /><span className="font-semibold text-[#e6edf3] truncate">{apiDrivers.find(d => d.id === trip.driverId)?.firstName || 'Unknown'}</span></div>
                       </div>
                     </div>
                   </motion.div>
@@ -975,8 +1036,7 @@ export default function TripsRouting() {
                   </div>
                 </div>
 
-                <div className="border-t border-[#30363d] pt-4">
-                  <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center justify-between mb-3">
                     <label className="text-xs font-bold text-[#8b949e] uppercase tracking-wider">Intermediate Zones</label>
                     <div className="relative">
                       <select value={numZones} onChange={e => setNumZones(Number(e.target.value))}
@@ -999,7 +1059,6 @@ export default function TripsRouting() {
                       </AnimatePresence>
                     </div>
                   )}
-                </div>
               </div>
 
               {/* Assignment */}
@@ -1008,20 +1067,30 @@ export default function TripsRouting() {
                   <User className="text-[#22d3ee] w-3.5 h-3.5" /> Assignment
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-[#8b949e] uppercase tracking-wider mb-1.5">Vehicle</label>
-                    <select value={mainVehicle} onChange={e => setMainVehicle(e.target.value)}
-                      className="w-full bg-[#0d1117] border border-[#30363d] text-[#e6edf3] text-sm rounded-xl focus:ring-2 focus:ring-[#22d3ee]/40 p-2.5 transition-all">
-                      {VEHICLES.map(v => <option key={v} value={v}>{v}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-[#8b949e] uppercase tracking-wider mb-1.5">Driver</label>
-                    <select value={mainDriver} onChange={e => setMainDriver(e.target.value)}
-                      className="w-full bg-[#0d1117] border border-[#30363d] text-[#e6edf3] text-sm rounded-xl focus:ring-2 focus:ring-[#22d3ee]/40 p-2.5 transition-all">
-                      {DRIVERS.map(d => <option key={d} value={d}>{d}</option>)}
-                    </select>
-                  </div>
+                  <div className="flex gap-4">
+                      <div className="flex-1 relative">
+                        <select 
+                          className="w-full bg-[#0d1117] border border-[#30363d] text-[#e6edf3] text-sm rounded-lg focus:ring-2 focus:ring-[#22d3ee] p-2.5 pl-10 appearance-none"
+                          value={mainVehicle}
+                          onChange={e => setMainVehicle(e.target.value)}
+                        >
+                          {apiVehicles.map(v => <option key={v.id} value={v.id}>{v.make} {v.model} ({v.plateNumber || v.licensePlate})</option>)}
+                          {apiVehicles.length === 0 && <option value="">No vehicles found</option>}
+                        </select>
+                        <Truck className="w-4 h-4 text-[#8b949e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+                      <div className="flex-1 relative">
+                        <select 
+                          className="w-full bg-[#0d1117] border border-[#30363d] text-[#e6edf3] text-sm rounded-lg focus:ring-2 focus:ring-[#22d3ee] p-2.5 pl-10 appearance-none"
+                          value={mainDriver}
+                          onChange={e => setMainDriver(e.target.value)}
+                        >
+                          {apiDrivers.map(d => <option key={d.id} value={d.id}>{d.firstName} {d.lastName}</option>)}
+                          {apiDrivers.length === 0 && <option value="">No drivers found</option>}
+                        </select>
+                        <User className="w-4 h-4 text-[#8b949e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      </div>
+                    </div>
                 </div>
               </div>
 

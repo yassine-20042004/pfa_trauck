@@ -18,6 +18,7 @@ public class AppDbContext : DbContext, IApplicationDbContext
     public DbSet<LoadPlan> LoadPlans { get; set; }
     public DbSet<CargoItem> CargoItems { get; set; }
     public DbSet<DeliveryStop> DeliveryStops { get; set; }
+    public DbSet<Incident> Incidents { get; set; }
     public DbSet<AccessRequest> AccessRequests { get; set; }
     public DbSet<User> Users { get; set; }
 

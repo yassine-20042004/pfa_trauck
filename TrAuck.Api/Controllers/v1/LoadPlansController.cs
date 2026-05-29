@@ -1,39 +1,78 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.LoadPlans;
 
 namespace TrAuckApi.Controllers.v1;
-
-public class LoadPlanDto {
-    public string? tripId { get; set; }
-    public string? description { get; set; }
-    public double totalWeight { get; set; }
-}
 
 [ApiController]
 [Route("api/v1/[controller]")]
 public class LoadPlansController : ControllerBase
 {
-    private static readonly List<object> _loadPlans = new List<object>
+    private readonly IMediator _mediator;
+
+    public LoadPlansController(IMediator mediator)
     {
-        new { id = "1", tripId = "1", description = "Medical Supplies for Tangier Port", totalWeight = 500.0 },
-        new { id = "2", tripId = "2", description = "Electronics Batch A", totalWeight = 1200.0 }
-    };
+        _mediator = mediator;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
-        return Ok(_loadPlans);
+        var loadPlans = await _mediator.Send(new GetLoadPlansQuery(), cancellationToken);
+        return Ok(loadPlans);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] LoadPlanDto loadPlan)
+    public async Task<IActionResult> Post([FromBody] CreateLoadPlanDto dto, CancellationToken cancellationToken)
     {
-        var planObj = new { 
-            id = Guid.NewGuid().ToString(),
-            tripId = loadPlan.tripId,
-            description = loadPlan.description,
-            totalWeight = loadPlan.totalWeight
+        // Accept both string and Guid for tripId
+        Guid.TryParse(dto.TripId, out var tripGuid);
+
+        var command = new CreateLoadPlanCommand
+        {
+            TripId = tripGuid,
+            Description = dto.Description ?? string.Empty,
+            TotalWeight = dto.TotalWeight
         };
-        _loadPlans.Add(planObj);
-        return Created("", planObj);
+
+        var loadPlan = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/loadplans/{loadPlan.Id}", loadPlan);
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var loadPlan = await _mediator.Send(new GetLoadPlanByIdQuery { Id = id }, cancellationToken);
+        if (loadPlan == null)
+            return NotFound();
+        return Ok(loadPlan);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateLoadPlanCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var loadPlan = await _mediator.Send(command, cancellationToken);
+        if (loadPlan == null)
+            return NotFound();
+        return Ok(loadPlan);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteLoadPlanCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
+}
+
+public class CreateLoadPlanDto
+{
+    public string? TripId { get; set; }
+    public string? Description { get; set; }
+    public double TotalWeight { get; set; }
 }

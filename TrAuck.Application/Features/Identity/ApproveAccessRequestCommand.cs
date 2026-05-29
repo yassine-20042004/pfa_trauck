@@ -49,6 +49,24 @@ public class ApproveAccessRequestCommandHandler : IRequestHandler<ApproveAccessR
         };
 
         _context.Users.Add(newUser);
+
+        // 3. If it's a driver, create the Driver record
+        if (newUser.Role.ToLower() == "driver")
+        {
+            var newDriver = new TrAuckDomain.Aggregates.FleetAggregate.Driver
+            {
+                Id = Guid.NewGuid(),
+                UserId = newUser.Id,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                LicenseNumber = accessRequest.LicenseNumber ?? "PENDING",
+                Phone = "Pending", // Or add to access request
+                IsAvailable = true,
+                Rating = 5.0
+            };
+            _context.Drivers.Add(newDriver);
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
 
         return true;

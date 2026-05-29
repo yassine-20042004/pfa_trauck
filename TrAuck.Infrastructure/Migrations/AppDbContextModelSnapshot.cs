@@ -28,6 +28,31 @@ namespace TrAuck.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LicenseNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Rating")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.ToTable("Drivers");
@@ -38,6 +63,32 @@ namespace TrAuck.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<double>("CapacityTons")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Make")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -135,12 +186,12 @@ namespace TrAuck.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            CreatedAt = new DateTime(2026, 5, 17, 21, 22, 58, 144, DateTimeKind.Utc).AddTicks(6527),
+                            CreatedAt = new DateTime(2026, 5, 23, 15, 6, 37, 48, DateTimeKind.Utc).AddTicks(5252),
                             Email = "admin@admin.com",
                             FirstName = "System",
                             IsActive = true,
                             LastName = "Admin",
-                            PasswordHash = "$2a$11$MBvBDcsnarpRDGQOoFrukurFZjBWkn464n8rFrop0gyhWPpQgfNdm",
+                            PasswordHash = "$2a$11$9nbYodxZczNRBnN8jSh7FuYCM6iGeUToi3yDe2H6TYtefafoap6jK",
                             Role = "Admin"
                         });
                 });
@@ -162,6 +213,19 @@ namespace TrAuck.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("TotalWeight")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.ToTable("LoadPlans");
@@ -178,11 +242,78 @@ namespace TrAuck.Infrastructure.Migrations
                     b.ToTable("DeliveryStops");
                 });
 
+            modelBuilder.Entity("TrAuckDomain.Aggregates.TripAggregate.Incident", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ReportedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Incidents");
+                });
+
             modelBuilder.Entity("TrAuckDomain.Aggregates.TripAggregate.Trip", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CustomCoordsJson")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DepartedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Destination")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Distance")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Duration")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Origin")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("VehicleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Winner")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ZonesJson")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

@@ -8,18 +8,20 @@ interface Vehicle {
   id: string;
   make: string;
   model: string;
-  licensePlate: string;
-  capacity: number;
+  // API may return either camelCase (old) or PascalCase (domain)
+  plateNumber?: string;
+  licensePlate?: string;
+  capacityTons?: number;
+  capacity?: number;
+  status?: string;
 }
 
-const MOCK_VEHICLES: Vehicle[] = [
-  { id: "1", make: "Volvo", model: "FH16", licensePlate: "ABC-123", capacity: 40 },
-  { id: "2", make: "Mercedes", model: "Actros", licensePlate: "DEF-456", capacity: 35 },
-  { id: "3", make: "Scania", model: "R500", licensePlate: "GHI-789", capacity: 45 },
-];
+// Normalizers: handle both field name variants
+const getPlate = (v: Vehicle) => v.plateNumber ?? v.licensePlate ?? "—";
+const getCapacity = (v: Vehicle) => v.capacityTons ?? v.capacity ?? 0;
 
 export function VehiclesPage() {
-  const [vehicles, setVehicles] = useState<Vehicle[]>(MOCK_VEHICLES);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isBackendOffline, setIsBackendOffline] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -38,7 +40,6 @@ export function VehiclesPage() {
       setVehicles(data);
       setIsBackendOffline(false);
     } catch (error) {
-      setVehicles(MOCK_VEHICLES);
       setIsBackendOffline(true);
     } finally {
       setTimeout(() => setIsSyncing(false), 600);
@@ -52,13 +53,8 @@ export function VehiclesPage() {
   const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (isBackendOffline) {
-        const newVehicle = { ...formData, id: Math.random().toString() };
-        setVehicles([newVehicle, ...vehicles]);
-      } else {
-        await apiRequest("/vehicles", "POST", formData);
-        await fetchVehicles();
-      }
+      await apiRequest("/vehicles", "POST", formData);
+      await fetchVehicles();
       setFormData({ make: "", model: "", licensePlate: "", capacity: 0 });
     } catch (error) {
       console.error("Failed to add vehicle", error);
@@ -67,10 +63,10 @@ export function VehiclesPage() {
 
   const filteredVehicles = vehicles.filter(v => 
     `${v.make} ${v.model}`.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    v.licensePlate.toLowerCase().includes(searchQuery.toLowerCase())
+    getPlate(v).toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const highCapacityCount = vehicles.filter(v => v.capacity >= 40).length;
+  const highCapacityCount = vehicles.filter(v => getCapacity(v) >= 40).length;
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-12">
@@ -97,7 +93,7 @@ export function VehiclesPage() {
           
           {isBackendOffline ? (
             <span className="px-4 py-2 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-xl text-sm font-medium flex items-center gap-2 shadow-lg shadow-yellow-500/5">
-              <AlertTriangle className="w-4 h-4" /> Demo Mode
+              <AlertTriangle className="w-4 h-4" /> API Offline
             </span>
           ) : (
             <span className="px-4 py-2 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl text-sm font-medium flex items-center gap-2 shadow-lg shadow-emerald-500/5">
@@ -126,8 +122,8 @@ export function VehiclesPage() {
               <CheckCircle className="w-6 h-6 text-blue-400" />
             </div>
             <div>
-              <p className="text-sm font-medium text-zinc-400">Operational</p>
-              <h3 className="text-2xl font-bold text-white">{vehicles.length}</h3>
+              <p className="text-sm font-medium text-zinc-400">Available</p>
+              <h3 className="text-2xl font-bold text-white">{vehicles.filter(v => v.status !== "Maintenance").length}</h3>
             </div>
           </CardContent>
         </Card>
@@ -252,23 +248,23 @@ export function VehiclesPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-white text-base">{vehicle.make} {vehicle.model}</h3>
-                        <p className="text-xs font-mono text-zinc-500 mt-0.5 font-bold tracking-widest">{vehicle.licensePlate}</p>
+                        <p className="text-xs font-mono text-zinc-500 mt-0.5 font-bold tracking-widest">{getPlate(vehicle)}</p>
                       </div>
                     </div>
                     
                     <div className={`px-2.5 py-1 rounded-lg text-[10px] uppercase tracking-wider font-bold border ${
-                      vehicle.capacity >= 40 
+                      getCapacity(vehicle) >= 40 
                       ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' 
                       : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
                     }`}>
-                      {vehicle.capacity >= 40 ? 'Heavy Duty' : 'Standard'}
+                      {getCapacity(vehicle) >= 40 ? 'Heavy Duty' : 'Standard'}
                     </div>
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between">
                     <div className="flex items-center gap-2 text-zinc-400 text-sm">
                       <Maximize className="w-4 h-4 text-emerald-500" />
-                      <span className="font-medium text-white">{vehicle.capacity}</span> <span className="text-xs">Tons</span>
+                      <span className="font-medium text-white">{getCapacity(vehicle)}</span> <span className="text-xs">Tons</span>
                     </div>
                     <div className="text-xs text-zinc-500 font-mono">
                       ID: #{vehicle.id.substring(0, 8)}
@@ -283,8 +279,12 @@ export function VehiclesPage() {
                 <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
                   <Search className="w-8 h-8 text-zinc-600" />
                 </div>
-                <h3 className="text-white font-medium">No vehicles found</h3>
-                <p className="text-zinc-500 text-sm mt-1">Try adjusting your search criteria</p>
+                <h3 className="text-white font-medium">
+                  {isBackendOffline ? "API Offline" : "No vehicles registered"}
+                </h3>
+                <p className="text-zinc-500 text-sm mt-1">
+                  {isBackendOffline ? "Ensure the .NET API is running on localhost:5198" : "Use the form to register your first vehicle"}
+                </p>
               </div>
             )}
           </div>
