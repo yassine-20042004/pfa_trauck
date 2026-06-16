@@ -181,6 +181,33 @@ export function TripPage() {
     }
   };
 
+  const handleResumeNavigation = async () => {
+    if (!activeTrip) return;
+    try {
+      setIsEmergency(false);
+      
+      // Update trip: reset winner routing to Dijkstra and ensure status is Ongoing
+      await apiRequest(`/trips/${activeTrip.id}`, "PUT", {
+        id: activeTrip.id,
+        origin: activeTrip.origin,
+        destination: activeTrip.destination,
+        driverId: activeTrip.driverId,
+        vehicleId: activeTrip.vehicleId,
+        distance: activeTrip.distance,
+        duration: activeTrip.duration,
+        winner: "Dijkstra",
+        zonesJson: activeTrip.zonesJson,
+        customCoordsJson: activeTrip.customCoordsJson,
+        status: "Ongoing"
+      });
+
+      // Refetch trip to recalculate route
+      fetchDriverAndTrip();
+    } catch (err) {
+      console.error("Failed to resume navigation", err);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-full bg-zinc-950 text-zinc-400">
@@ -294,7 +321,10 @@ export function TripPage() {
             </div>
           </div>
           
-          <Button className="w-full h-16 text-lg font-bold rounded-2xl bg-white text-black hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98]">
+          <Button 
+            onClick={handleResumeNavigation} 
+            className="w-full h-16 text-lg font-bold rounded-2xl bg-white text-black hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(255,255,255,0.25)] hover:scale-[1.02] active:scale-[0.98]"
+          >
             <Navigation className="h-6 w-6 fill-current" />
             Resume Navigation
           </Button>
