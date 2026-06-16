@@ -275,7 +275,9 @@ export function TripPage() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                  <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
-                 <p className="text-xs text-emerald-400 font-bold tracking-widest uppercase">Next Stop</p>
+                 <p className="text-xs text-emerald-400 font-bold tracking-widest uppercase">
+                   Next Stop • {driver?.firstName} {driver?.lastName}
+                 </p>
               </div>
               <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400 flex items-center gap-2">
                 {activeTrip.destination}
