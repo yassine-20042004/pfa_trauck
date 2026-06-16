@@ -31,6 +31,8 @@ public class DriversController : ControllerBase
             LastName = dto.LastName ?? string.Empty,
             LicenseNumber = dto.LicenseNumber ?? string.Empty,
             Phone = dto.Phone ?? string.Empty,
+            Email = dto.Email ?? string.Empty,
+            Password = dto.Password ?? string.Empty,
             UserId = dto.UserId
         };
 
@@ -75,5 +77,7 @@ public class CreateDriverDto
     public string? LastName { get; set; }
     public string? LicenseNumber { get; set; }
     public string? Phone { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
     public Guid UserId { get; set; } = Guid.Empty;
 }

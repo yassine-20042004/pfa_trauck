@@ -10,6 +10,7 @@ public class LoginResponse
     public string Role { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
+    public Guid UserId { get; set; }
 }
 
 public class LoginCommand : IRequest<LoginResponse>
@@ -51,7 +52,8 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
             Token = token,
             Role = user.Role,
             FirstName = user.FirstName,
-            LastName = user.LastName
+            LastName = user.LastName,
+            UserId = user.Id
         };
     }
 }

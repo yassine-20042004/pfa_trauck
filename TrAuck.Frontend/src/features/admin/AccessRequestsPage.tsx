@@ -15,8 +15,18 @@ interface AccessRequestDto {
 }
 
 export function AccessRequestsPage() {
+  const email = useAuthStore(state => state.email);
   const [requests, setRequests] = useState<AccessRequestDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  if (email !== "admin@admin.com") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-zinc-400">
+        <h2 className="text-xl font-semibold text-white mb-2">Access Denied</h2>
+        <p>You do not have permission to view access requests.</p>
+      </div>
+    );
+  }
 
   useEffect(() => {
     fetchPendingRequests();

@@ -25,7 +25,9 @@ export function DriversPage() {
     firstName: "",
     lastName: "",
     licenseNumber: "",
-    phone: ""
+    phone: "",
+    email: "",
+    password: ""
   });
 
   const fetchDrivers = async () => {
@@ -51,7 +53,7 @@ export function DriversPage() {
     try {
       await apiRequest("/drivers", "POST", formData);
       await fetchDrivers();
-      setFormData({ firstName: "", lastName: "", licenseNumber: "", phone: "" });
+      setFormData({ firstName: "", lastName: "", licenseNumber: "", phone: "", email: "", password: "" });
     } catch (error) {
       console.error("Failed to add driver", error);
     }
@@ -192,7 +194,32 @@ export function DriversPage() {
                     type="text" 
                     value={formData.phone}
                     onChange={e => setFormData({...formData, phone: e.target.value})}
+                    required
                     placeholder="+212 6..."
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-zinc-600"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Email Address</label>
+                  <input 
+                    type="email" 
+                    value={formData.email}
+                    onChange={e => setFormData({...formData, email: e.target.value})}
+                    required
+                    placeholder="driver@trauck.com"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-zinc-600"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Account Password</label>
+                  <input 
+                    type="password" 
+                    value={formData.password}
+                    onChange={e => setFormData({...formData, password: e.target.value})}
+                    required
+                    placeholder="••••••••"
                     className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-zinc-600"
                   />
                 </div>

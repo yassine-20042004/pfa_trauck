@@ -32,7 +32,7 @@ export function LoginPage() {
       }
 
       const data = await response.json();
-      setAuth(data);
+      setAuth({ ...data, email });
 
       if (data.role.toLowerCase() === 'dispatcher' || data.role.toLowerCase() === 'admin') {
         navigate('/admin');
