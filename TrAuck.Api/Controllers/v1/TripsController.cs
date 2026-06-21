@@ -1,0 +1,92 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TrAuckApplication.Features.Trips.Commands;
+using TrAuckApplication.Features.Trips.Queries;
+
+namespace TrAuckApi.Controllers.v1;
+
+[ApiController]
+[Route("api/v1/[controller]")]
+public class TripsController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public TripsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    {
+        var trips = await _mediator.Send(new GetTripsQuery(), cancellationToken);
+        return Ok(trips);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] CreateTripDto dto, CancellationToken cancellationToken)
+    {
+        // Accept both string and Guid for driverId/vehicleId (frontend sends strings)
+        Guid.TryParse(dto.DriverId, out var driverGuid);
+        Guid.TryParse(dto.VehicleId, out var vehicleGuid);
+
+        var command = new CreateTripCommand
+        {
+            Origin = dto.Origin ?? string.Empty,
+            Destination = dto.Destination ?? string.Empty,
+            DriverId = driverGuid,
+            VehicleId = vehicleGuid,
+            Distance = dto.Distance,
+            Duration = dto.Duration,
+            Winner = dto.Winner ?? string.Empty,
+            ZonesJson = dto.ZonesJson ?? "[]",
+            CustomCoordsJson = dto.CustomCoordsJson ?? "{}"
+        };
+
+        var trip = await _mediator.Send(command, cancellationToken);
+        return Created($"/api/v1/trips/{trip.Id}", trip);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var trip = await _mediator.Send(new GetTripByIdQuery { Id = id }, cancellationToken);
+        if (trip == null)
+            return NotFound();
+        return Ok(trip);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(Guid id, [FromBody] UpdateTripCommand command, CancellationToken cancellationToken)
+    {
+        if (id != command.Id)
+            return BadRequest("Id in route does not match Id in body");
+
+        var trip = await _mediator.Send(command, cancellationToken);
+        if (trip == null)
+            return NotFound();
+        return Ok(trip);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(new DeleteTripCommand { Id = id }, cancellationToken);
+        if (!result)
+            return NotFound();
+        return NoContent();
+    }
+}
+
+public class CreateTripDto
+{
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
+    public string? DriverId { get; set; }
+    public string? VehicleId { get; set; }
+    public double Distance { get; set; }
+    public double Duration { get; set; }
+    public string? Winner { get; set; }
+    public string? ZonesJson { get; set; }
+    public string? CustomCoordsJson { get; set; }
+}
